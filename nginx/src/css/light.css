@@ -1,0 +1,7 @@
+body {
+    color: var(--bs-dark);
+    background-color: var(--bs-light);
+}
+.adaptText {
+    color: var(--bs-dark);
+}

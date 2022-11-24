@@ -1,0 +1,37 @@
+{
+    // See https://go.microsoft.com/fwlink/?LinkId=733558
+    // for the documentation about the tasks.json format
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "label": "Run compose",
+            "type": "shell",
+            "dependsOn": [
+                "Build compose"
+            ],
+            "dependsOrder": "sequence",
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            }
+        },
+        {
+            "label": "Remove compose",
+            "type": "shell",
+            "command": "docker-compose -f 'docker-compose.yml' down",
+            "problemMatcher": []
+        },
+        {
+            "label": "Build compose",
+            "type": "shell",
+            "command": "docker-compose -f 'docker-compose.yml' up -d --build",
+            "problemMatcher": []
+        },
+        {
+            "label": "Soft restart compose",
+            "type": "shell",
+            "command": "docker compose -f 'docker-compose.yml' -p 'project' restart",
+            "problemMatcher": []
+        }
+    ]
+}
