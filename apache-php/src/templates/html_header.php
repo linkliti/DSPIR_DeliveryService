@@ -29,7 +29,4 @@ if ($_SESSION['theme']){
 else {
     echo '<link id="pagestyle" rel="stylesheet" href="/css/light.css">';
 }
-
-# Site header
-require $_SERVER['DOCUMENT_ROOT'] . '/view/page_header.php';
 ?>

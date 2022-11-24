@@ -8,7 +8,7 @@ function params(param) {
 }
 
 function ftch(param) {
-    fetch(window.location.origin + '/session/session_man.php', params(param))
+    fetch(window.location.origin + '/api/settings.php', params(param))
 }
 
 function reload() {
@@ -16,23 +16,20 @@ function reload() {
 }
 
 function noReloadChangeTheme() {
-    var sheet
+    var sheet;
     var theme = document.getElementById("pagestyle").getAttribute("href");
     if (theme == '/css/dark.css') {
-        sheet = '/css/light.css'
+        sheet = '/css/light.css';
     } else {
-        sheet = '/css/dark.css'
+        sheet = '/css/dark.css';
     };
     document.getElementById("pagestyle").setAttribute("href", sheet);
 }
 
+// Change Theme
 function changeTheme() {
     noReloadChangeTheme()
     document.getElementById("themeToggle").disabled = true;
-    setTimeout(function () { document.getElementById("themeToggle").disabled = false; }, 500);
+    setTimeout(function () { document.getElementById("themeToggle").disabled = false; }, 250);
     ftch('action=theme')
-}
-
-function setLogin() {
-    ftch('action=login&login=' + document.querySelector('input').value)
 }

@@ -1,9 +1,3 @@
-<?php
-require_once $_SERVER['DOCUMENT_ROOT'] . '/controller/_helper.php';
-require_once $_SERVER['DOCUMENT_ROOT'] . '/view/html_header.php';
-?>
-<html lang="ru">
-
 <head>
     <title>Главная</title>
 </head>
@@ -22,9 +16,6 @@ require_once $_SERVER['DOCUMENT_ROOT'] . '/view/html_header.php';
         </div>
     </div>
     </main>
-    <?php
-    require_once $_SERVER['DOCUMENT_ROOT'] . '/view/page_footer.php';
-    ?>
 </body>
 
 </html>
