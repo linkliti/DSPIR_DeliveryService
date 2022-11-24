@@ -1,10 +1,8 @@
 <?php
 $links = array(
-  "/index.php" => "Главная страница",
-  "/session_test.php" => "Дебаг",
-  "/pdf/showPDF.php" => "PDF",
-  "/catalogue.php" => "Каталог",
-  "/admin.php" => "Администрирование",
+  "/home/home.php" => "Главная страница",
+  "/home/session_test.php" => "Дебаг",
+  "/admin/admin.php" => "Администрирование",
 );
 ?>
 

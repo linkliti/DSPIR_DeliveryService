@@ -46,17 +46,14 @@ class baseView
     {
         echo 'View alive';
     }
-    public function __construct($current_path, $data = null)
+    public function __construct($current_path)
     {
         $this->current_path = $current_path;
-        if (isset($data)) {
-            $this->data = $data;
-        }
     }
     public function loadHeader()
     {
-        require_once getFileFromRoot('/templates/html_header.php');
-        require_once getFileFromRoot('/templates/page_header.php');
+        require_once getFileFromRoot('/_templates/html_header.php');
+        require_once getFileFromRoot('/_templates/page_header.php');
     }
 
     public function loadContent()
@@ -65,7 +62,7 @@ class baseView
     }
     public function loadFooter()
     {
-        require_once getFileFromRoot('/templates/page_footer.php');
+        require_once getFileFromRoot('/_templates/page_footer.php');
     }
 }
 ?>
