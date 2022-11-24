@@ -1,6 +1,6 @@
 <?php
-require_once $_SERVER['DOCUMENT_ROOT'] . '/_helper.php';
-require_once $_SERVER['DOCUMENT_ROOT'] . '/session/html_header.php';
+require_once $_SERVER['DOCUMENT_ROOT'] . '/controller/_helper.php';
+require_once $_SERVER['DOCUMENT_ROOT'] . '/view/html_header.php';
 
 echo '<div id="wblock">';
 

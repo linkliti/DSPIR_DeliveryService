@@ -1,30 +1,42 @@
 <?php
+// On start
+session_start();
+date_default_timezone_set("Europe/Moscow");
 require_once $_SERVER['DOCUMENT_ROOT'] . '/_helper.php';
-require_once $_SERVER['DOCUMENT_ROOT'] . '/session/html_header.php';
-?>
-<html lang="ru">
+main();
 
-<head>
-    <title>Главная</title>
-</head>
+function main()
+{
+    # Current URL
+    $current_url = explode('/', trim($_SERVER['REQUEST_URI'], '/'));
 
-<body class='d-flex flex-column h-100'>
-    <main id="main">
-    <div class="px-4 py-5 my-5 text-center">
-        <img class="d-block mx-auto mb-4" src="https://www.graphicpie.com/wp-content/uploads/2020/11/red-among-us-png.png" alt="" width="72" height="57">
-        <h1 class="display-5 fw-bold">Centered hero</h1>
-        <div class="col-lg-6 mx-auto">
-            <p class="lead mb-4">Quickly design and customize responsive mobile-first sites with Bootstrap, the world’s most popular front-end open source toolkit, featuring Sass variables and mixins, responsive grid system, extensive prebuilt components, and powerful JavaScript plugins.</p>
-            <div class="d-grid gap-2 d-sm-flex justify-content-sm-center">
-                <button type="button" class="btn btn-primary btn-lg px-4 gap-3">Primary button</button>
-                <button type="button" class="btn btn-outline-secondary btn-lg px-4">Secondary</button>
-            </div>
-        </div>
-    </div>
-    </main>
-    <?php
-    require_once $_SERVER['DOCUMENT_ROOT'] . '/session/page_footer.php';
-    ?>
-</body>
+    # Redirect from root directory
+    if (count($current_url) != 2) {
+        header('Location: /home/home.php');
+        return;
+    }
+    # Start classes
+    try {
+        $ModelClass = getClass($current_url[0], 'Model');
+        $ViewClass = getClass($current_url[0], 'View');
+        $ControllerClass = getClass($current_url[0], 'Controller');
+    } catch (Exception $e) {
+        outputStatus(2, $e->getMessage());
+        return;
+    }
+    $ControllerClass = new $ControllerClass($ModelClass, $ViewClass);
+}
 
-</html>
+
+# Get class
+function getClass($path, $classtype)
+{
+    $classpath = getFileFromRoot("/{$path}/_{$classtype}.php"); // Задание пути к контроллеру
+    $class = "{$path}{$classtype}"; // Задание пути к классу контроллера
+    if (file_exists($classpath)) {
+        require_once $classpath;
+        if (class_exists($class))
+            return $class;
+    }
+    throw new Exception('Missing Class');
+}

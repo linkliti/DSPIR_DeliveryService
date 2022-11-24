@@ -31,5 +31,5 @@ else {
 }
 
 # Site header
-require $_SERVER['DOCUMENT_ROOT'] . '/session/page_header.php';
+require $_SERVER['DOCUMENT_ROOT'] . '/view/page_header.php';
 ?>
