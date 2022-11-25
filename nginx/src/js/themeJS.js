@@ -18,10 +18,10 @@ function reload() {
 function noReloadChangeTheme() {
     var sheet;
     var theme = document.getElementById("pagestyle").getAttribute("href");
-    if (theme == '/css/dark.css') {
-        sheet = '/css/light.css';
+    if (theme == '/css/library/bootstrap-night.min.css') {
+        sheet = '/css/library/bootstrap.min.css';
     } else {
-        sheet = '/css/dark.css';
+        sheet = '/css/library/bootstrap-night.min.css';
     };
     document.getElementById("pagestyle").setAttribute("href", sheet);
 }

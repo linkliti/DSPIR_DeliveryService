@@ -1,0 +1,5 @@
+RewriteEngine On
+RewriteBase /
+RewriteRule ^(files) - [L]
+RewriteRule ^(.*)$ index.php [NC,L]
+AddType 'text/html; charset=utf-8' .html .htm .shtml
