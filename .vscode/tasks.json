@@ -7,7 +7,7 @@
             "label": "Run compose",
             "type": "shell",
             "dependsOn": [
-                "Build compose"
+                "Remove compose", "Build compose"
             ],
             "dependsOrder": "sequence",
             "group": {

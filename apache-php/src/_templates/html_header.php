@@ -7,7 +7,7 @@
 
 
 <!-- JS + CSS -->
-<script src="/js/themeJS.js"></script>
+<script src="/js/baseJS.js"></script>
 <link rel="stylesheet" href="/css/base.css">
 
 <?php

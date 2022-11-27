@@ -2,25 +2,12 @@
 require_once getFileFromRoot('/_base_classes.php');
 class apiController extends baseController
 {
-    protected $postdata;
     public function __construct($ModelClass, $ViewClass, $current_path)
     {
         parent::__construct($ModelClass, $ViewClass, $current_path);
-        $this->postdata = $this->getPost();
+        $json = $this->getPost();
         $file = (explode('/', $_SERVER['REQUEST_URI']))[2];
-        switch ($file) {
-            case 'api.php': {
-                    $this->view->outputPostJson(json_encode($this->postdata));
-                    break;
-                }
-            case 'settings.php': {
-                    $theme = $_SESSION['theme'] ?? false;
-                    $_SESSION['theme'] = !$theme;
-                }
-            default: {
-                    echo 'ERROR';
-                }
-        }
+        require_once getFileFromRoot('/api/' . $file);
     }
     protected function getPost()
     {
@@ -31,12 +18,20 @@ class apiController extends baseController
 }
 class apiModel extends baseModel
 {
+    public function __construct() {
+        parent::__construct();
+    }
+    public function getOrderStatus($order_id)
+    {
+        $query = "CALL getOrderStatus(" . $order_id .");";
+        $this->mysqli->query($query);
+    }
+    public function getTable($post) {
+        $query = "CALL get" . $post . "Table();";
+        return $this->mysqli->query($query);
+    }
 }
 class apiView extends baseView
 {
-    public function outputPostJson($json)
-    {
-        require_once getFileFromRoot($this->current_path);
-    }
 }
 ?>

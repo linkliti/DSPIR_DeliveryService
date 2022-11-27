@@ -6,14 +6,25 @@ class tableController extends baseController
     {
         parent::__construct($ModelClass, $ViewClass, $current_path);
         $this->view->loadHeader();
-        $this->view->loadContent();
+        $file = (explode('/', $_SERVER['REQUEST_URI']))[2];
+        $post = explode('.', $file)[0];
+        $this->view->loadTable($this->model->getTable($post));
         $this->view->loadFooter();
     }
 }
 class tableModel extends baseModel
 {
+    public function getTable($post)
+    {
+        $query = "CALL get" . $post . "Table();";
+        return $this->mysqli->query($query);
+    }
 }
 class tableView extends baseView
 {
+    public function loadTable($table)
+    {
+        require_once getFileFromRoot($this->current_path);
+    }
 }
 ?>

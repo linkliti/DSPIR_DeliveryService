@@ -1,20 +1,22 @@
-
-function params(param) {
+// Send POST request
+function params(request_type, data) {
     return {
-        method: 'POST',
+        method: request_type,
         headers: { 'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8' },
-        body: param
+        body: data
     }
 }
 
-function ftch(param) {
-    fetch(window.location.origin + '/api/settings.php', params(param))
+function ftch(request_type, target_link, data) {
+    fetch(window.location.origin + target_link, params(request_type, data))
 }
 
-function reload() {
+// Reload window
+function reload_page() {
     location.reload()
 }
 
+// Update style without reload
 function noReloadChangeTheme() {
     var sheet;
     var theme = document.getElementById("pagestyle").getAttribute("href");
@@ -31,5 +33,5 @@ function changeTheme() {
     noReloadChangeTheme()
     document.getElementById("themeToggle").disabled = true;
     setTimeout(function () { document.getElementById("themeToggle").disabled = false; }, 250);
-    ftch('action=theme')
+    ftch('PATCH', '/api/user_api.php', {"theme": true})
 }

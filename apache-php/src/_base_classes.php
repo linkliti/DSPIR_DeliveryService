@@ -30,8 +30,10 @@ class baseController
 
 class baseModel
 {
+    protected $mysqli;
     public function __construct()
     {
+        $this->mysqli = openmysqli();
     }
     public function isAlive()
     {
