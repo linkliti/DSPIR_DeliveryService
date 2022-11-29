@@ -241,7 +241,7 @@ VALUES (
     ),
     (
         'worker7',
-        '$apr1$exmqzonl$hJYCvNP / C8S8odzEYSwJe /',
+        '$apr1$exmqzonl$hJYCvNP/C8S8odzEYSwJe/',
         'Квасников Егор Арсеньевич',
         'Сборщик',
         45000,
@@ -287,33 +287,50 @@ VALUES (4, 3, 5, 2, 500, '20221030', 0),
     (6, 4, 1, 4, 790, '20221030', 0);
 
 -- Процедуры
-DROP PROCEDURE IF EXISTS getmanagerTable;
+DROP PROCEDURE IF EXISTS getclientsTable;
 DELIMITER /
-CREATE PROCEDURE getmanagerTable() BEGIN
+CREATE PROCEDURE getclientsTable() BEGIN
+SELECT *
+FROM Clients;
+END /
+DELIMITER ;
+
+DROP PROCEDURE IF EXISTS getordersTable;
+DELIMITER /
+CREATE PROCEDURE getordersTable() BEGIN
 SELECT *
 FROM Orders;
-END / DELIMITER;
+END /
+DELIMITER ;
 
-DROP PROCEDURE IF EXISTS getassemblerTable;
+DROP PROCEDURE IF EXISTS getpvzTable;
 DELIMITER /
-CREATE PROCEDURE getassemblerTable() BEGIN
+CREATE PROCEDURE getpvzTable() BEGIN
+SELECT *
+FROM PVZ;
+END /
+DELIMITER ;
+
+DROP PROCEDURE IF EXISTS getvehiclesTable;
+DELIMITER /
+CREATE PROCEDURE getvehiclesTable() BEGIN
+SELECT *
+FROM Vehicles;
+END /
+DELIMITER ;
+
+DROP PROCEDURE IF EXISTS getwarehouseTable;
+DELIMITER /
+CREATE PROCEDURE getwarehouseTable() BEGIN
 SELECT *
 FROM Warehouse;
 END /
 DELIMITER ;
 
-DROP PROCEDURE IF EXISTS getadminTable;
+DROP PROCEDURE IF EXISTS getworkersTable;
 DELIMITER /
-CREATE PROCEDURE getadminTable() BEGIN
+CREATE PROCEDURE getworkersTable() BEGIN
 SELECT *
 FROM Workers;
-END /
-DELIMITER ;
-
-DROP PROCEDURE IF EXISTS getdriverTable;
-DELIMITER /
-CREATE PROCEDURE getdriverTable() BEGIN
-SELECT *
-FROM Orders;
 END /
 DELIMITER ;

@@ -16,6 +16,9 @@ function getFileFromRoot($path) {
     return $_SERVER['DOCUMENT_ROOT'] . $path;
 }
 
+function currentFile() {
+    return (explode('/', $_SERVER['REQUEST_URI']))[2];
+}
 # Get class
 function getClass($path, $classtype)
 {

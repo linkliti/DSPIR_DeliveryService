@@ -1,8 +1,12 @@
 <?php
 $links = array(
   "/home/session_test.php" => "Дебаг",
-  "/admin/admin.php" => "Администрирование",
-  "/table/manager.php" => "Управление доставками",
+  "/table/workers.php" => "Персонал",
+  "/table/orders.php" => "Заказы",
+  "/table/warehouse.php" => "Склад",
+  "/table/vehicles.php" => "Автомобили",
+  "/table/pvz.php" => "ПВЗ",
+  "/table/clients.php" => "Клиенты",
 );
 ?>
 

@@ -3,16 +3,13 @@
 try {
     switch ($_SERVER['REQUEST_METHOD']) {
         case 'POST':
-            addOrder($json);
+            addToTable($json);
             break;
         case 'DELETE':
-            deleteOrder($json);
+            deleteFromTable($json);
             break;
         case 'PATCH':
-            updateOrder($json);
-            break;
-        case 'GET':
-            getTable($json);
+            updateTable($json);
             break;
         default:
             outputStatus(2, 'Invalid Mode');
@@ -22,20 +19,12 @@ try {
     outputStatus(2, $message);
 }
 
-function addOrder($json)
-{
-}
-
-function deleteOrder($json)
-{
+function addToTable($json) {
 
 }
-
-function updateOrder($json)
-{
-}
-function getTable($json)
-{
+function deleteFromTable($json) {
 
 }
-?>
+function updateTable($json) {
+
+}

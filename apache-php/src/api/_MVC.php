@@ -6,14 +6,14 @@ class apiController extends baseController
     {
         parent::__construct($ModelClass, $ViewClass, $current_path);
         $json = $this->getPost();
-        $file = (explode('/', $_SERVER['REQUEST_URI']))[2];
+        $file = currentFile();
         require_once getFileFromRoot('/api/' . $file);
     }
     protected function getPost()
     {
         $data = file_get_contents('php://input');
-        $data = json_decode($data, true);
-        return $data;
+        $jsondata = json_decode($data, true);
+        return $jsondata;
     }
 }
 class apiModel extends baseModel
@@ -26,10 +26,12 @@ class apiModel extends baseModel
         $query = "CALL getOrderStatus(" . $order_id .");";
         $this->mysqli->query($query);
     }
-    public function getTable($post) {
+    public function getTable($post)
+    {
         $query = "CALL get" . $post . "Table();";
         return $this->mysqli->query($query);
     }
+
 }
 class apiView extends baseView
 {

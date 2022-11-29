@@ -36,7 +36,6 @@ function updatePosition()
 }
 function getTable($json)
 {
-    $controller = '$this'; // ignore errors
-    $$controller->model->getPackageStatus();
+
 }
 ?>

@@ -40,7 +40,7 @@ function changeTheme()
 }
 function getOrderStatus($json)
 {
-    $controller = '$this'; // ignore errors
+    $controller = 'this'; // ignore errors
     $$controller->model->getOrderStatus();
 }
 ?>

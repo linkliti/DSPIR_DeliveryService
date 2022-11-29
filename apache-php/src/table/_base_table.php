@@ -9,45 +9,94 @@
 <script type="text/javascript" src="/js/library/dataTables.checkboxes.min.js"></script>
 
 <style type="text/css">
-    .dt-checkboxes {
-        width: 1em;
-        height: 1em;
-        margin-top: .25em;
-    }
+  .dt-checkboxes {
+    width: 1em;
+    height: 1em;
+    margin-top: .25em;
+  }
 </style>
 
+<!-- Table JS -->
 <script type="text/javascript">
-    $(document).ready(function () {
-        var table = $('#example').DataTable({
-            'columnDefs': [
-                {
-                    'targets': 0,
-                    'checkboxes': {
-                        'selectRow': true,
-                        'selectAll': false
-                    }
-                }
-            ],
-            dom: '<lf<rt>ip>',
-            'language': {
-                url: '//cdn.datatables.net/plug-ins/1.13.1/i18n/ru.json'
-            },
-            'select': {
-                'style': 'multi'
-            },
-            'order': [[1, 'asc']]
-        });
-
-        // Handle form submission event
-        $('#frm-example').on('submit', function (e) {
-            var form = this;
-            for (var i=0; i < table.rows('.selected').data().length; i++) {
-                ID = table.rows('.selected').data()[i][1];
-                console.log(ID);
-            }
-            ftch('PATCH', '/api/table_api.php', '')
-            e.preventDefault();
-        });
+  $(document).ready(function () {
+    table = $('#example').DataTable({
+      'columnDefs': [
+        {
+          'targets': 0,
+          'checkboxes': {
+            'selectRow': true,
+            'selectAll': false
+          }
+        }
+      ],
+      dom: '<lf<rt>ip>',
+      'language': {
+        url: '//cdn.datatables.net/plug-ins/1.13.1/i18n/ru.json'
+      },
+      'select': {
+        'style': 'multi'
+      },
+      'order': [[1, 'asc']]
     });
 
+    // Handle form submission event
+    $('#frm-example').on('submit', function (e) {
+      e.preventDefault();
+    });
+  });
+  function getSelectedIDs() {
+    selected = [];
+    for (var i = 0; i < table.rows('.selected').data().length; i++) {
+      ID = table.rows('.selected').data()[i][1];
+      selected.push(ID);
+    }
+    return selected;
+  }
+  function addToTable(data) {
+    ftch('POST', '/api/table_api.php', '{"table": <?php currentFile(); ?> ,"data": ' + data + '}');
+  }
+  function updateTable(data) {
+    selected = getSelectedIDs();
+    if (selected.length > 1) {
+      ftch('PATCH', '/api/table_api.php', '{"table": <?php currentFile(); ?> , "id": [' + selected.join(',') + '], "data": ' + data + '}');
+    }
+  }
+  function deleteFromTable() {
+    selected = getSelectedIDs();
+    if (selected.length > 1) {
+      ftch('DELETE', '/api/table_api.php', '{"table": <?php currentFile(); ?> ,"id": [' + selected.join(',') + ']}')
+    }
+  }
 </script>
+
+<!-- Table -->
+<table id="example" class="table table-bordered table-striped dataTable dt-checkboxes-select" cellspacing="0" width="100%">
+  <thead class="table-dark">
+    <tr>
+      <?php
+      foreach ($table_headers as $header) {
+        echo "<td>" . $header . "</td>";
+      }
+      ?>
+    </tr>
+  </thead>
+  <tbody>
+    <?php
+    $tableData = 'table'; // ignore error
+    if ($$tableData->num_rows > 0) {
+      foreach ($$tableData as $entry) {
+        echo "<tr>";
+        foreach ($table_data as $data) {
+          echo "<td>" . $entry[$data] . "</td>";
+        }
+        echo "</tr>";
+      }
+    } else {
+      echo '';
+    }
+    ?>
+  </tbody>
+</table>
+<hr>
+</form>
+</div>

@@ -3,11 +3,11 @@
 </head>
 
 
-<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<div class="modal fade" id="loginModal" tabindex="-1" aria-labelledby="loginModalLabel" aria-hidden="true">
   <div class="modal-dialog modal-dialog-centered">
     <div class="modal-content rounded-4 py-auto shadow">
       <div class="modal-header p-5 pb-4 border-bottom-0">
-        <h1 class="fw-bold mb-0 fs-2">Вход</h1>
+        <h1 class="fw-bold mb-0 fs-2">Добавление</h1>
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
 
@@ -37,7 +37,7 @@
       <p class="lead mb-4">Quickly design and customize responsive mobile-first sites with Bootstrap, the world’s most popular front-end open source toolkit, featuring Sass variables and mixins, responsive grid system, extensive prebuilt components, and powerful JavaScript plugins.</p>
       <div class="d-grid gap-2 d-sm-flex justify-content-sm-center">
         <button type="button" class="btn btn-primary btn-lg px-4 gap-3">Отслеживание</button>
-        <button type="button" class="btn btn-primary btn-lg px-4" data-bs-toggle="modal" data-bs-target="#exampleModal">Авторизация</button>
+        <button type="button" class="btn btn-primary btn-lg px-4" data-bs-toggle="modal" data-bs-target="#loginModal">Авторизация</button>
       </div>
     </div>
   </div>
