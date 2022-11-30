@@ -1,30 +1,25 @@
 <?php
+$cont = 'this'; // Ignore file warnings
 // Mode
 try {
     switch ($_SERVER['REQUEST_METHOD']) {
+        // addToTable
         case 'POST':
-            addToTable($json);
             break;
+
+        // deleteFromTable
         case 'DELETE':
-            deleteFromTable($json);
             break;
+
+        // updateTable
         case 'PATCH':
-            updateTable($json);
             break;
+
+        // Error
         default:
             outputStatus(2, 'Invalid Mode');
     }
 } catch (Exception $e) {
     $message = $e->getMessage();
-    outputStatus(2, $message);
-}
-
-function addToTable($json) {
-
-}
-function deleteFromTable($json) {
-
-}
-function updateTable($json) {
-
+    $$cont->view->outputStatus(2, $message);
 }

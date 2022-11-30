@@ -45,27 +45,12 @@
     });
   });
   function getSelectedIDs() {
-    selected = [];
+    var selected = [];
     for (var i = 0; i < table.rows('.selected').data().length; i++) {
       ID = table.rows('.selected').data()[i][1];
       selected.push(ID);
     }
     return selected;
-  }
-  function addToTable(data) {
-    ftch('POST', '/api/table_api.php', '{"table": <?php currentFile(); ?> ,"data": ' + data + '}');
-  }
-  function updateTable(data) {
-    selected = getSelectedIDs();
-    if (selected.length > 1) {
-      ftch('PATCH', '/api/table_api.php', '{"table": <?php currentFile(); ?> , "id": [' + selected.join(',') + '], "data": ' + data + '}');
-    }
-  }
-  function deleteFromTable() {
-    selected = getSelectedIDs();
-    if (selected.length > 1) {
-      ftch('DELETE', '/api/table_api.php', '{"table": <?php currentFile(); ?> ,"id": [' + selected.join(',') + ']}')
-    }
   }
 </script>
 

@@ -10,6 +10,7 @@ function main()
 {
     # Redirect on missing files
     $server_path = $_SERVER["DOCUMENT_ROOT"] . $_SERVER["REQUEST_URI"];
+    $server_path = strtok($server_path, '?');
     if (!(file_exists($server_path))) {
         header("location: /error.html");
         return;

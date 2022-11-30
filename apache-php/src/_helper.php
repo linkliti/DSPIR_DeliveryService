@@ -5,19 +5,14 @@ function openmysqli(): mysqli {
     return $connection;
 }
 
-# JSON Status output
-function outputStatus($status, $message)
-{
-    echo '{status: ' . $status . ', message: "' . $message . '"}';
-}
-
 # File from root directory
 function getFileFromRoot($path) {
     return $_SERVER['DOCUMENT_ROOT'] . $path;
 }
 
 function currentFile() {
-    return (explode('/', $_SERVER['REQUEST_URI']))[2];
+    $s = (explode('/', $_SERVER['REQUEST_URI']))[2];
+    return strstr($s, '?', true) ?: $s;
 }
 # Get class
 function getClass($path, $classtype)

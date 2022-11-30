@@ -24,7 +24,12 @@ class apiModel extends baseModel
     public function getOrderStatus($order_id)
     {
         $query = "CALL getOrderStatus(" . $order_id .");";
-        $this->mysqli->query($query);
+        $result = $this->mysqli->query($query);
+        $result = $result->fetch_row();
+        if ($result == null) {
+            return array(-1, 'Заказ не найден');
+        }
+        return $result;
     }
     public function getTable($post)
     {

@@ -9,7 +9,7 @@ CREATE TABLE IF NOT EXISTS `PVZ` (
     `WorkersAmount` INT NOT NULL,
     `PVZ_Schedule` VARCHAR(45) NOT NULL,
     PRIMARY KEY (`id_PVZ`)
-) ENGINE = InnoDB;
+)  ENGINE=INNODB;
 
 -- Таблица `Clients`
 CREATE TABLE IF NOT EXISTS `Clients` (
@@ -78,179 +78,36 @@ CREATE TABLE IF NOT EXISTS `Orders` (
 USE `DeliveryService`;
 -- Таблицы
 INSERT INTO Clients (Fullname, PhoneNumber, Email, ClientType)
-VALUES (
-        'Яндульская Марианна Игнатьевна',
-        '+7 (959) 746-44-72',
-        'marianna59@yandex.ru',
-        0
-    ),
-    (
-        'Янишпольская Алиса Сергеевна',
-        '+7 (930) 732-56-48',
-        'alisa43@outlook.com',
-        2
-    ),
-    (
-        'Фаммус Егор Степанович',
-        '+7 (958) 271-76-69',
-        'egor.fammus@outlook.com',
-        1
-    ),
-    (
-        'Низамутдинов Василий Дмитриевич',
-        '+7 (975) 305-75-77',
-        'vasiliy1987@gmail.com',
-        2
-    ),
-    (
-        'Вазова Инна Севастьяновна',
-        '+7 (993) 648-20-44',
-        'inna.vazova@mail.ru',
-        1
-    );
-
+VALUES ( 'Яндульская Марианна Игнатьевна', '+7 (959) 746-44-72', 'marianna59@yandex.ru', 0 ), 
+( 'Янишпольская Алиса Сергеевна', '+7 (930) 732-56-48', 'alisa43@outlook.com', 2 ), 
+( 'Фаммус Егор Степанович', '+7 (958) 271-76-69', 'egor.fammus@outlook.com', 1 ), 
+( 'Низамутдинов Василий Дмитриевич', '+7 (975) 305-75-77', 'vasiliy1987@gmail.com', 2 ), 
+( 'Вазова Инна Севастьяновна', '+7 (993) 648-20-44', 'inna.vazova@mail.ru', 1 );
 
 INSERT INTO Vehicles (Vehicle, VIN, GovNumber)
 VALUES ('Не водитель', ' ', ' '),
-    (
-        'Geely Emgrand EC7',
-        'KS6TV944473456755',
-        'С866ТК84'
-    ),
+    ( 'Geely Emgrand EC7', 'KS6TV944473456755', 'С866ТК84' ),
     ('Audi A2', 'GX0VX855518853187', 'Е108УВ46'),
     ('Audi A3', 'KR8SF943860695598', 'М708ЕК18'),
     ('BMW X3 M', 'FX0HU884196530198', 'Х960НВ84'),
     ('BMW M5', 'YR9EG774652155467', 'В581ВЕ06');
 
 INSERT INTO PVZ (PVZ, Address, WorkersAmount, PVZ_Schedule)
-VALUES (
-        'Главный',
-        'Россия, Г. Москва, Большой Гнездниковский пер., 3',
-        27,
-        '5/2'
-    ),
-    (
-        'Восточный',
-        'Россия, Г. Москва, Кусковская ул., 17, стр. 1',
-        17,
-        '5/2'
-    ),
-    (
-        'Западный',
-        'Россия, Г. Москва, Союзная ул., 1В, Одинцовоподъезд №2, помещение №102',
-        12,
-        '5/2'
-    ),
-    (
-        'Северный',
-        'Россия, Г. Москва, Окружная ул., 13, Лобня',
-        7,
-        '7/0'
-    ),
-    (
-        'Южный',
-        'Россия, Г. Москва, Севастопольский просп., 51, корп. 2',
-        18,
-        '5/2'
-    );
+VALUES ( 'Главный', 'Россия, Г. Москва, Большой Гнездниковский пер., 3', 27, '5/2' ),
+    ( 'Восточный', 'Россия, Г. Москва, Кусковская ул., 17, стр. 1', 17, '5/2' ),
+    ( 'Западный', 'Россия, Г. Москва, Союзная ул., 1В, Одинцовоподъезд №2, помещение №102', 12, '5/2' ),
+    ( 'Северный', 'Россия, Г. Москва, Окружная ул., 13, Лобня', 7, '7/0' ),
+    ( 'Южный', 'Россия, Г. Москва, Севастопольский просп., 51, корп. 2', 18, '5/2' );
 
 -- https://www.web2generators.com/apache-tools/htpasswd-generator
-INSERT INTO Workers (
-        User_login,
-        User_pass,
-        Fullname,
-        Post,
-        Salary,
-        WorkerType,
-        Shift,
-        Statistic,
-        Revenue,
-        Vehicles_id_Vehicle
-    )
-VALUES (
-        'worker1',
-        '$apr1$xmdu072q$CjUBSyHrUCHp/1aL7FfIH/',
-        'Жиглов Данила Денисович',
-        'Администратор',
-        65000,
-        0,
-        '5/2',
-        0,
-        0,
-        1
-    ),
-    (
-        'worker2',
-        '$apr1$c9jygoun$piNJXQCsfku/8iyhTQRXd.',
-        'Новохацкий Константин Никитович',
-        'Водитель-экспедитор',
-        80000,
-        1,
-        '5/2',
-        102,
-        236353,
-        4
-    ),
-    (
-        'worker3',
-        '$apr1$rtbcn3ad$lq91jMi35l1WRDN.jhfjK1',
-        'Райан Томас Гослинг',
-        'Водитель-экспедитор',
-        120000,
-        1,
-        '6/1',
-        156,
-        567263,
-        3
-    ),
-    (
-        'worker4',
-        '$apr1$rpn1zq7g$HLsEH9eRimdorcvyC0NiK0',
-        'Осокина Виктория Прокловна',
-        'Менеджер',
-        40000,
-        1,
-        '5/2',
-        0,
-        0,
-        1
-    ),
-    (
-        'worker5',
-        '$apr1$lknzx08g$e3PQr0NXCNnOOGXziqkjW1',
-        'Бурда Настасья Всеволодовна',
-        'Бухгалтер',
-        60000,
-        1,
-        '5/2',
-        0,
-        0,
-        1
-    ),
-    (
-        'worker6',
-        '$apr1$wlhu2vpo$iWmX0o8WUoOIo75b.v4N71',
-        'Акимова Афанасия Петровна',
-        'Сборщик',
-        30000,
-        0,
-        '3/3',
-        152,
-        0,
-        1
-    ),
-    (
-        'worker7',
-        '$apr1$exmqzonl$hJYCvNP/C8S8odzEYSwJe/',
-        'Квасников Егор Арсеньевич',
-        'Сборщик',
-        45000,
-        1,
-        '5/3',
-        364,
-        0,
-        1
-    );
+INSERT INTO Workers ( User_login, User_pass, Fullname, Post, Salary, WorkerType, Shift, Statistic, Revenue, Vehicles_id_Vehicle )
+VALUES ( 'worker1', '$apr1$xmdu072q$CjUBSyHrUCHp/1aL7FfIH/', 'Жиглов Данила Денисович', 'Администратор', 65000, 0, '5/2', 0, 0, 1 ),
+    ( 'worker2', '$apr1$c9jygoun$piNJXQCsfku/8iyhTQRXd.', 'Новохацкий Константин Никитович', 'Водитель-экспедитор', 80000, 1, '5/2', 102, 236353, 4 ),
+    ( 'worker3', '$apr1$rtbcn3ad$lq91jMi35l1WRDN.jhfjK1', 'Райан Томас Гослинг', 'Водитель-экспедитор', 120000, 1, '6/1', 156, 567263, 3 ),
+    ( 'worker4', '$apr1$rpn1zq7g$HLsEH9eRimdorcvyC0NiK0', 'Осокина Виктория Прокловна', 'Менеджер', 40000, 1, '5/2', 0, 0, 1 ),
+    ( 'worker5', '$apr1$lknzx08g$e3PQr0NXCNnOOGXziqkjW1', 'Бурда Настасья Всеволодовна', 'Бухгалтер', 60000, 1, '5/2', 0, 0, 1 ),
+    ( 'worker6', '$apr1$wlhu2vpo$iWmX0o8WUoOIo75b.v4N71', 'Акимова Афанасия Петровна', 'Сборщик', 30000, 0, '3/3', 152, 0, 1 ),
+    ( 'worker7', '$apr1$exmqzonl$hJYCvNP/C8S8odzEYSwJe/', 'Квасников Егор Арсеньевич', 'Сборщик', 45000, 1, '5/3', 364, 0, 1 );
 
 INSERT INTO Warehouse (
         Position,
@@ -261,12 +118,7 @@ INSERT INTO Warehouse (
 VALUES ('Стул', 'Мебель', 'A1B1', 6),
     ('Игрушка Хаги-Ваги', 'Игрушки', 'A1B2', 7),
     ('Средство от кашля', 'Лекарство', 'A2B1', 6),
-    (
-        'Подушка длинная',
-        'Постельные принадлежности',
-        'A4B1',
-        6
-    ),
+    ( 'Подушка длинная', 'Постельные принадлежности', 'A4B1', 6 ),
     ('Вода в бутылях', 'Вода', 'A1B3', 7),
     ('Игрушка Амогус', 'Игрушки', 'A2B4', 7);
 
@@ -279,14 +131,14 @@ INSERT INTO Orders (
         DeliveryDateTime,
         DeliveryStatus
     )
-VALUES (4, 3, 5, 2, 500, '20221030', 0),
-    (5, 2, 4, 3, 560, '20221014', 1),
-    (1, 1, 3, 3, 700, '20221016', 1),
+VALUES (4, 3, 5, 2, 500, '20221030', 4),
+    (5, 2, 4, 3, 560, '20221014', 3),
+    (1, 1, 3, 3, 700, '20221016', 2),
     (2, 5, 2, 3, 300, '20221012', 1),
-    (3, 4, 1, 2, 720, '20221031', 0),
-    (6, 4, 1, 4, 790, '20221030', 0);
+    (3, 4, 1, 2, 720, '20221031', 3),
+    (6, 4, 1, 4, 790, '20221030', 5);
 
--- Процедуры
+-- Процедуры получения таблиц
 DROP PROCEDURE IF EXISTS getclientsTable;
 DELIMITER /
 CREATE PROCEDURE getclientsTable() BEGIN
@@ -334,3 +186,45 @@ SELECT *
 FROM Workers;
 END /
 DELIMITER ;
+-- Процедура получения статуса
+DROP PROCEDURE IF EXISTS getOrderStatus;
+DELIMITER /
+CREATE PROCEDURE getOrderStatus(id int) BEGIN
+SELECT DeliveryStatus, friendly_DeliveryStatus(DeliveryStatus)
+FROM Orders
+WHERE id_Order = id;
+END /
+DELIMITER ;
+
+-- Функция отображения статуса
+DROP FUNCTION IF EXISTS friendly_DeliveryStatus;
+DELIMITER /
+CREATE FUNCTION friendly_DeliveryStatus(typenum int)
+RETURNS	varchar(45) DETERMINISTIC
+BEGIN
+	DECLARE friendly_msg varchar(45);
+    IF typenum = -1 THEN
+		SET friendly_msg = 'Заказ отменен';
+        RETURN(friendly_msg);
+	ELSEIF typenum = 0 THEN
+		SET friendly_msg = 'Обработка менеджером';
+        RETURN(friendly_msg);
+	ELSEIF typenum = 1 THEN
+		SET friendly_msg = 'Обработка сборщиком';
+        RETURN(friendly_msg);
+	ELSEIF typenum = 2 THEN
+		SET friendly_msg = 'В ожидании водителя';
+        RETURN(friendly_msg);
+	ELSEIF typenum = 3 THEN
+		SET friendly_msg = 'Доставляется в пункт выдачи';
+        RETURN(friendly_msg);
+	ELSEIF typenum = 4 THEN
+		SET friendly_msg = 'Доставлен в пункт выдачи';
+        RETURN(friendly_msg);
+	ELSEIF typenum = 5 THEN
+		SET friendly_msg = 'Заказ получен клиентом';
+        RETURN(friendly_msg);
+	END IF;
+END /
+DELIMITER ;
+

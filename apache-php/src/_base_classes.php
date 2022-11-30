@@ -66,5 +66,14 @@ class baseView
     {
         require_once getFileFromRoot('/_templates/page_footer.php');
     }
+    public function outputStatus($status, $message, $result='')
+    {
+        if (($result != '')) {
+            echo '{"status": ' . $status . ', "result": "' . $result . '", "message": "' . $message . '"}';
+        }
+        else {
+            echo '{"status": ' . $status . ', "message": "' . $message . '"}';
+        }
+    }
 }
 ?>
