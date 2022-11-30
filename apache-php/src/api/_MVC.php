@@ -31,10 +31,27 @@ class apiModel extends baseModel
         }
         return $result;
     }
-    public function getTable($post)
+    public function getTable($table)
     {
-        $query = "CALL get" . $post . "Table();";
+        $query = "CALL get" . $table . "Table();";
         return $this->mysqli->query($query);
+    }
+
+    public function checkIDinTable($table, $id)
+    {
+        $table = ucfirst($table);
+        $id_name = substr($table, 0, -1);
+        $query = "SELECT id_" . $id_name . " FROM " . $table . " WHERE id_" . $id_name . " = " . $id . ";";
+        $result = $this->mysqli->query($query);
+        return $result->fetch_row();
+    }
+
+    public function deleteFromTable($table, $id) {
+        $table = ucfirst($table);
+        $id_name = substr($table, 0, -1);
+        $query = "DELETE FROM " . $table . " WHERE id_". $id_name . " = " . $id . ";";
+        $this->mysqli->query($query);
+        return $id;
     }
 
 }

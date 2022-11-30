@@ -2,7 +2,7 @@ DROP DATABASE IF EXISTS `DeliveryService`;
 CREATE DATABASE IF NOT EXISTS `DeliveryService` DEFAULT CHARACTER SET utf8;
 USE `DeliveryService`;
 -- Таблица `PVZ`
-CREATE TABLE IF NOT EXISTS `PVZ` (
+CREATE TABLE IF NOT EXISTS `PVZs` (
     `id_PVZ` INT NOT NULL AUTO_INCREMENT,
     `PVZ` VARCHAR(45) NOT NULL,
     `Address` VARCHAR(100) NOT NULL,
@@ -48,7 +48,7 @@ CREATE TABLE IF NOT EXISTS `Workers` (
 ) ENGINE = InnoDB;
 
 -- Таблица `Warehouse`
-CREATE TABLE IF NOT EXISTS `Warehouse` (
+CREATE TABLE IF NOT EXISTS `Positions` (
     `id_Position` INT NOT NULL AUTO_INCREMENT,
     `Position` VARCHAR(45) NOT NULL,
     `PositionType` VARCHAR(45) NOT NULL,
@@ -61,27 +61,27 @@ CREATE TABLE IF NOT EXISTS `Warehouse` (
 -- Таблица `Orders`
 CREATE TABLE IF NOT EXISTS `Orders` (
     `id_Order` INT NOT NULL AUTO_INCREMENT,
-    `Warehouse_id_Position` INT NOT NULL,
+    `Positions_id_Position` INT NOT NULL,
     `Clients_id_Client` INT NOT NULL,
-    `PVZ_id_PVZ` INT NOT NULL,
+    `PVZs_id_PVZ` INT NOT NULL,
     `Workers_id_Worker` INT NOT NULL,
     `DeliveryAmount` FLOAT NOT NULL,
     `DeliveryDateTime` DATETIME NOT NULL,
     `DeliveryStatus` INT NOT NULL,
-    PRIMARY KEY (`id_Order`, `Warehouse_id_Position`),
-    FOREIGN KEY (`PVZ_id_PVZ`) REFERENCES `PVZ` (`id_PVZ`),
+    PRIMARY KEY (`id_Order`, `Positions_id_Position`),
+    FOREIGN KEY (`PVZs_id_PVZ`) REFERENCES `PVZs` (`id_PVZ`),
     FOREIGN KEY (`Clients_id_Client`) REFERENCES `Clients` (`id_Client`),
-    FOREIGN KEY (`Warehouse_id_Position`) REFERENCES `Warehouse` (`id_Position`),
+    FOREIGN KEY (`Positions_id_Position`) REFERENCES `Positions` (`id_Position`),
     FOREIGN KEY (`Workers_id_Worker`) REFERENCES `Workers` (`id_Worker`)
 ) ENGINE = InnoDB;
 -- Data
 USE `DeliveryService`;
 -- Таблицы
 INSERT INTO Clients (Fullname, PhoneNumber, Email, ClientType)
-VALUES ( 'Яндульская Марианна Игнатьевна', '+7 (959) 746-44-72', 'marianna59@yandex.ru', 0 ), 
-( 'Янишпольская Алиса Сергеевна', '+7 (930) 732-56-48', 'alisa43@outlook.com', 2 ), 
-( 'Фаммус Егор Степанович', '+7 (958) 271-76-69', 'egor.fammus@outlook.com', 1 ), 
-( 'Низамутдинов Василий Дмитриевич', '+7 (975) 305-75-77', 'vasiliy1987@gmail.com', 2 ), 
+VALUES ( 'Яндульская Марианна Игнатьевна', '+7 (959) 746-44-72', 'marianna59@yandex.ru', 0 ),
+( 'Янишпольская Алиса Сергеевна', '+7 (930) 732-56-48', 'alisa43@outlook.com', 2 ),
+( 'Фаммус Егор Степанович', '+7 (958) 271-76-69', 'egor.fammus@outlook.com', 1 ),
+( 'Низамутдинов Василий Дмитриевич', '+7 (975) 305-75-77', 'vasiliy1987@gmail.com', 2 ),
 ( 'Вазова Инна Севастьяновна', '+7 (993) 648-20-44', 'inna.vazova@mail.ru', 1 );
 
 INSERT INTO Vehicles (Vehicle, VIN, GovNumber)
@@ -92,7 +92,7 @@ VALUES ('Не водитель', ' ', ' '),
     ('BMW X3 M', 'FX0HU884196530198', 'Х960НВ84'),
     ('BMW M5', 'YR9EG774652155467', 'В581ВЕ06');
 
-INSERT INTO PVZ (PVZ, Address, WorkersAmount, PVZ_Schedule)
+INSERT INTO PVZs (PVZ, Address, WorkersAmount, PVZ_Schedule)
 VALUES ( 'Главный', 'Россия, Г. Москва, Большой Гнездниковский пер., 3', 27, '5/2' ),
     ( 'Восточный', 'Россия, Г. Москва, Кусковская ул., 17, стр. 1', 17, '5/2' ),
     ( 'Западный', 'Россия, Г. Москва, Союзная ул., 1В, Одинцовоподъезд №2, помещение №102', 12, '5/2' ),
@@ -109,12 +109,7 @@ VALUES ( 'worker1', '$apr1$xmdu072q$CjUBSyHrUCHp/1aL7FfIH/', 'Жиглов Да�
     ( 'worker6', '$apr1$wlhu2vpo$iWmX0o8WUoOIo75b.v4N71', 'Акимова Афанасия Петровна', 'Сборщик', 30000, 0, '3/3', 152, 0, 1 ),
     ( 'worker7', '$apr1$exmqzonl$hJYCvNP/C8S8odzEYSwJe/', 'Квасников Егор Арсеньевич', 'Сборщик', 45000, 1, '5/3', 364, 0, 1 );
 
-INSERT INTO Warehouse (
-        Position,
-        PositionType,
-        PositionLocation,
-        Workers_id_Worker
-    )
+INSERT INTO Positions ( Position, PositionType, PositionLocation, Workers_id_Worker )
 VALUES ('Стул', 'Мебель', 'A1B1', 6),
     ('Игрушка Хаги-Ваги', 'Игрушки', 'A1B2', 7),
     ('Средство от кашля', 'Лекарство', 'A2B1', 6),
@@ -122,15 +117,7 @@ VALUES ('Стул', 'Мебель', 'A1B1', 6),
     ('Вода в бутылях', 'Вода', 'A1B3', 7),
     ('Игрушка Амогус', 'Игрушки', 'A2B4', 7);
 
-INSERT INTO Orders (
-        Warehouse_id_Position,
-        Clients_id_Client,
-        PVZ_id_PVZ,
-        Workers_id_Worker,
-        DeliveryAmount,
-        DeliveryDateTime,
-        DeliveryStatus
-    )
+INSERT INTO Orders ( Positions_id_Position, Clients_id_Client, PVZs_id_PVZ, Workers_id_Worker, DeliveryAmount, DeliveryDateTime, DeliveryStatus )
 VALUES (4, 3, 5, 2, 500, '20221030', 4),
     (5, 2, 4, 3, 560, '20221014', 3),
     (1, 1, 3, 3, 700, '20221016', 2),
@@ -155,9 +142,9 @@ FROM Orders;
 END /
 DELIMITER ;
 
-DROP PROCEDURE IF EXISTS getpvzTable;
+DROP PROCEDURE IF EXISTS getpvzsTable;
 DELIMITER /
-CREATE PROCEDURE getpvzTable() BEGIN
+CREATE PROCEDURE getpvzsTable() BEGIN
 SELECT *
 FROM PVZ;
 END /
@@ -171,9 +158,9 @@ FROM Vehicles;
 END /
 DELIMITER ;
 
-DROP PROCEDURE IF EXISTS getwarehouseTable;
+DROP PROCEDURE IF EXISTS getpositionsTable;
 DELIMITER /
-CREATE PROCEDURE getwarehouseTable() BEGIN
+CREATE PROCEDURE getpositionsTable() BEGIN
 SELECT *
 FROM Warehouse;
 END /
@@ -227,4 +214,3 @@ BEGIN
 	END IF;
 END /
 DELIMITER ;
-

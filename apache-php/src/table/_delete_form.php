@@ -9,16 +9,15 @@
         deleteFromTable();
       })
     });
-  function deleteFromTable() {
+  async function deleteFromTable() {
     var selected = getSelectedIDs();
     var data = {};
     data["table"] = <?php echo '"' .currentFile(). '";'; ?>;
     data["data"] = {};
     data["data"]["ids"] = selected;
     str_data = JSON.stringify(data);
-    alert(str_data);
-    ftch('DELETE', '/api/table_api.php', str_data);
-    //reload();
+    await ftch('DELETE', '/api/table_api.php', str_data);
+    reload_page();
   }
 </script>
 

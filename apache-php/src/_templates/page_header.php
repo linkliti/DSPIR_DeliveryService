@@ -3,9 +3,9 @@ $links = array(
   "/home/session_test.php" => "Дебаг",
   "/table/workers.php" => "Персонал",
   "/table/orders.php" => "Заказы",
-  "/table/warehouse.php" => "Склад",
+  "/table/positions.php" => "Склад",
   "/table/vehicles.php" => "Автомобили",
-  "/table/pvz.php" => "ПВЗ",
+  "/table/pvzs.php" => "ПВЗ",
   "/table/clients.php" => "Клиенты",
 );
 ?>

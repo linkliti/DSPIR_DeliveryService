@@ -11,7 +11,7 @@
     })
   });
 
-  function addToTable() {
+  async function addToTable() {
     var form = document.getElementById('addModalForm')
     var headers = [
     <?php
@@ -27,8 +27,8 @@
     };
     data["table"] = <?php echo '"' . currentFile() . '";'; ?>
     str_data = JSON.stringify(data);
-    ftch('POST', '/api/table_api.php', str_data);
-    //reload();
+    await ftch('POST', '/api/table_api.php', str_data);
+    //reload_page();
   }
 </script>
 

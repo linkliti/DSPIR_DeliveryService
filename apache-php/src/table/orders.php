@@ -1,6 +1,6 @@
 <?php
 $table_headers = array('', 'ID доставки', 'ID позиции', 'ID клиента', 'ID ПВЗ', 'ID Сборщика', 'Сумма', 'Дата доставки', 'Статус');
-$table_data = array('id_Order', 'id_Order', 'Warehouse_id_Position', 'Clients_id_Client', 'PVZ_id_PVZ', 'Workers_id_Worker', 'DeliveryAmount', 'DeliveryDateTime', 'DeliveryStatus');
+$table_data = array('id_Order', 'id_Order', 'Positions_id_Position', 'Clients_id_Client', 'PVZs_id_PVZ', 'Workers_id_Worker', 'DeliveryAmount', 'DeliveryDateTime', 'DeliveryStatus');
 ?>
 
 <div class="container-lg pt-4">

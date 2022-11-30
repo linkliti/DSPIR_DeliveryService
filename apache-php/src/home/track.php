@@ -35,7 +35,7 @@
     var data = {};
     data["order"] = order;
     str_data = JSON.stringify(data);
-    var response = await ftch_result('/api/user_api.php', str_data);
+    var response = await ftch_get('/api/user_api.php', str_data);
     //reload();
     status.innerHTML = "Заказ номер: " + order + "; Статус: " + response["result"];
   }

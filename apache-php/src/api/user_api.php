@@ -20,6 +20,8 @@ try {
         case 'PATCH':
             $theme = $_SESSION['theme'] ?? false;
             $_SESSION['theme'] = !$theme;
+            $theme_str = !$theme ? 'true' : 'false';
+            $$cont->view->outputStatus(0, "Theme toggle: " . $theme_str);
             break;
 
         // getOrderStatus

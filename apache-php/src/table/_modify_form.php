@@ -20,7 +20,7 @@
     data["data"]["ids"] = selected;
     str_data = JSON.stringify(data);
     ftch('PATCH', '/api/table_api.php', str_data);
-    //reload();
+    //reload_page;
   }
 </script>
 

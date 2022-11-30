@@ -10,6 +10,19 @@ function getFileFromRoot($path) {
     return $_SERVER['DOCUMENT_ROOT'] . $path;
 }
 
+// Wrap in commas
+function wrap($o) {
+    if (is_array($o)) {
+        foreach ($o as $i => $e) {
+            $o[$i] = '"' . $e . '"';
+        }
+        return implode(', ', $o);
+    }
+    else if (is_string($o)) {
+        return '"' . $o . '"';
+    }
+}
+
 function currentFile() {
     $s = (explode('/', $_SERVER['REQUEST_URI']))[2];
     return strstr($s, '?', true) ?: $s;
