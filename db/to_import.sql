@@ -2,13 +2,13 @@ DROP DATABASE IF EXISTS `DeliveryService`;
 CREATE DATABASE IF NOT EXISTS `DeliveryService` DEFAULT CHARACTER SET utf8;
 USE `DeliveryService`;
 -- Таблица `PVZ`
-CREATE TABLE IF NOT EXISTS `PVZs` (
-    `id_PVZ` INT NOT NULL AUTO_INCREMENT,
+CREATE TABLE IF NOT EXISTS `Pvzs` (
+    `id_Pvz` INT NOT NULL AUTO_INCREMENT,
     `PVZ` VARCHAR(45) NOT NULL,
     `Address` VARCHAR(100) NOT NULL,
     `WorkersAmount` INT NOT NULL,
     `PVZ_Schedule` VARCHAR(45) NOT NULL,
-    PRIMARY KEY (`id_PVZ`)
+    PRIMARY KEY (`id_Pvz`)
 )  ENGINE=INNODB;
 
 -- Таблица `Clients`
@@ -63,13 +63,13 @@ CREATE TABLE IF NOT EXISTS `Orders` (
     `id_Order` INT NOT NULL AUTO_INCREMENT,
     `Positions_id_Position` INT NOT NULL,
     `Clients_id_Client` INT NOT NULL,
-    `PVZs_id_PVZ` INT NOT NULL,
+    `Pvzs_id_Pvz` INT NOT NULL,
     `Workers_id_Worker` INT NOT NULL,
     `DeliveryAmount` FLOAT NOT NULL,
     `DeliveryDateTime` DATETIME NOT NULL,
     `DeliveryStatus` INT NOT NULL,
     PRIMARY KEY (`id_Order`, `Positions_id_Position`),
-    FOREIGN KEY (`PVZs_id_PVZ`) REFERENCES `PVZs` (`id_PVZ`),
+    FOREIGN KEY (`Pvzs_id_Pvz`) REFERENCES `Pvzs` (`id_Pvz`),
     FOREIGN KEY (`Clients_id_Client`) REFERENCES `Clients` (`id_Client`),
     FOREIGN KEY (`Positions_id_Position`) REFERENCES `Positions` (`id_Position`),
     FOREIGN KEY (`Workers_id_Worker`) REFERENCES `Workers` (`id_Worker`)
@@ -92,7 +92,7 @@ VALUES ('Не водитель', ' ', ' '),
     ('BMW X3 M', 'FX0HU884196530198', 'Х960НВ84'),
     ('BMW M5', 'YR9EG774652155467', 'В581ВЕ06');
 
-INSERT INTO PVZs (PVZ, Address, WorkersAmount, PVZ_Schedule)
+INSERT INTO Pvzs (PVZ, Address, WorkersAmount, PVZ_Schedule)
 VALUES ( 'Главный', 'Россия, Г. Москва, Большой Гнездниковский пер., 3', 27, '5/2' ),
     ( 'Восточный', 'Россия, Г. Москва, Кусковская ул., 17, стр. 1', 17, '5/2' ),
     ( 'Западный', 'Россия, Г. Москва, Союзная ул., 1В, Одинцовоподъезд №2, помещение №102', 12, '5/2' ),
@@ -117,7 +117,7 @@ VALUES ('Стул', 'Мебель', 'A1B1', 6),
     ('Вода в бутылях', 'Вода', 'A1B3', 7),
     ('Игрушка Амогус', 'Игрушки', 'A2B4', 7);
 
-INSERT INTO Orders ( Positions_id_Position, Clients_id_Client, PVZs_id_PVZ, Workers_id_Worker, DeliveryAmount, DeliveryDateTime, DeliveryStatus )
+INSERT INTO Orders ( Positions_id_Position, Clients_id_Client, Pvzs_id_Pvz, Workers_id_Worker, DeliveryAmount, DeliveryDateTime, DeliveryStatus )
 VALUES (4, 3, 5, 2, 500, '20221030', 4),
     (5, 2, 4, 3, 560, '20221014', 3),
     (1, 1, 3, 3, 700, '20221016', 2),
@@ -146,7 +146,7 @@ DROP PROCEDURE IF EXISTS getpvzsTable;
 DELIMITER /
 CREATE PROCEDURE getpvzsTable() BEGIN
 SELECT *
-FROM PVZ;
+FROM Pvzs;
 END /
 DELIMITER ;
 
@@ -162,7 +162,7 @@ DROP PROCEDURE IF EXISTS getpositionsTable;
 DELIMITER /
 CREATE PROCEDURE getpositionsTable() BEGIN
 SELECT *
-FROM Warehouse;
+FROM Positions;
 END /
 DELIMITER ;
 

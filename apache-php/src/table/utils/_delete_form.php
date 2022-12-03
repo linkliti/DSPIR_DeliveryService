@@ -16,8 +16,15 @@
     data["data"] = {};
     data["data"]["ids"] = selected;
     str_data = JSON.stringify(data);
-    await ftch('DELETE', '/api/table_api.php', str_data);
-    reload_page();
+    displayError('StatusMSGDelete');
+    toggleFormButtons(true);
+    var response = await ftch('DELETE', '/api/table_api.php', str_data);
+    toggleFormButtons(false);
+    if (response["status"] != 0) {
+      displayError('StatusMSGDelete', response["message"]);
+    } else {
+      reload_page();
+    }
   }
 </script>
 
@@ -31,7 +38,8 @@
       <div class="modal-body p-5 pt-0">
         <form id="deleteModalForm" class="">
           <p class="fs-5"> Вы уверены что хотите удалить выбранные записи? </p>
-          <button class="w-100 mb-2 mt-2 btn btn-lg rounded-3 btn-primary" type="submit">Подтвердить</button>
+          <p id="StatusMSGDelete" class="fw-bold"></p>
+          <button class="formBTN w-100 mb-2 mt-2 btn btn-lg rounded-3 btn-primary" type="submit">Подтвердить</button>
         </form>
       </div>
     </div>

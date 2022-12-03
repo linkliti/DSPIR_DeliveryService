@@ -1,26 +1,29 @@
-<?php
-// $table_headers
-// $table_data
-?>
 <script type="text/javascript">
   window.addEventListener("DOMContentLoaded", function () {
-      document.getElementById('updateModalForm').addEventListener("submit", function (e) {
-        e.preventDefault();
-        updateTable();
-      })
-    });
-  function updateTable() {
+    document.getElementById('updateModalForm').addEventListener("submit", function (e) {
+      e.preventDefault();
+      updateTable();
+    })
+  });
+  async function updateTable() {
     var selected = getSelectedIDs();
     var form = document.getElementById('updateModalForm');
     var data = {};
-    data["table"] = <?php echo '"' .currentFile(). '";'; ?>;
+    data["table"] = <?php echo '"' . currentFile() . '";'; ?>;
     data["data"] = {};
     data["data"]["var"] = document.getElementById('UpdateVariable').value;
     data["data"]["val"] = document.getElementById('UpdateValue').value;
     data["data"]["ids"] = selected;
     str_data = JSON.stringify(data);
-    ftch('PATCH', '/api/table_api.php', str_data);
-    //reload_page;
+    displayError('StatusMSGModify');
+    toggleFormButtons(true);
+    var response = await ftch('PATCH', '/api/table_api.php', str_data);
+    toggleFormButtons(false);
+    if (response["status"] != 0) {
+      displayError('StatusMSGModify', response["message"]);
+    } else {
+      reload_page();
+    }
   }
 </script>
 
@@ -49,10 +52,11 @@
               </select>
             </div>
           </div>
-          <div class="form-floating mb-3 mt-3">
+          <div class="form-floating mb-3 mt-2">
             <input type="text" required class="form-control rounded-3" id="UpdateValue" placeholder="Значение">
             <label for="UpdateValue">Значение</label>
           </div>
+          <p id="StatusMSGModify" class="fw-bold"></p>
           <button class="w-100 mb-2 mt-2 btn btn-lg rounded-3 btn-primary" type="submit">Отправить</button>
         </form>
       </div>

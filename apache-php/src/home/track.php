@@ -6,14 +6,14 @@
     <img class="d-block mx-auto mb-4" src="https://www.graphicpie.com/wp-content/uploads/2020/11/red-among-us-png.png" alt="" width="72" height="57">
     <h1 class="display-5 fw-bold">Отслеживание</h1>
     <div class="col-lg-6 mx-auto">
-      <p id="orderStatusDisplay" class="lead mb-4">Введите номер заказа для отображения его состояния</p>
+      <p id="StatusMSG" class="lead mb-4">Введите номер заказа для отображения его состояния</p>
       <form id="orderStatusForm">
         <div class="form-floating mb-3 mt-3">
           <input type="text" name="input_field" required class="form-control rounded-3" id="orderInput" placeholder="Номер заказа">
           <label for="orderInput">Номер заказа</label>
         </div>
         <div class="d-grid gap-2 d-sm-flex justify-content-sm-center">
-          <button type="submint" class="btn btn-primary btn-lg px-4 mt-3">Отследить</button>
+          <button type="submit" class="formBTN btn btn-primary btn-lg px-4 mt-3">Отследить</button>
         </div>
       </form>
     </div>
@@ -30,13 +30,19 @@
 
   async function getOrderStatus() {
     var form = document.getElementById('orderStatusForm')
-    var status = document.getElementById('orderStatusDisplay')
+    var status = document.getElementById('StatusMSG')
     var order = form.input_field.value
     var data = {};
     data["order"] = order;
     str_data = JSON.stringify(data);
-    var response = await ftch_get('/api/user_api.php', str_data);
-    //reload();
-    status.innerHTML = "Заказ номер: " + order + "; Статус: " + response["result"];
+    displayError('StatusMSG');
+    toggleFormButtons(true);
+    var response = await ftch('GET', '/api/user_api.php', str_data);
+    toggleFormButtons(false);
+    if (response["status"] != 0) {
+      displayError('StatusMSG', response["message"]);
+    } else {
+      status.innerHTML = "Заказ номер: " + order + "; Статус: " + response["result"];
+    }
   }
 </script>

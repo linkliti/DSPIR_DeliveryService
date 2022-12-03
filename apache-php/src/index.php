@@ -38,14 +38,10 @@ function main()
         return;
     }
     # Get classes by URL
-    try {
-        $ModelClass = getClass($current_url_array[0], 'Model');
-        $ViewClass = getClass($current_url_array[0], 'View');
-        $ControllerClass = getClass($current_url_array[0], 'Controller');
-    } catch (Exception $e) {
-        outputStatus(2, $e->getMessage());
-        return;
-    }
+    $ModelClass = getClass($current_url_array[0], 'Model');
+    $ViewClass = getClass($current_url_array[0], 'View');
+    $ControllerClass = getClass($current_url_array[0], 'Controller');
+
     # Start controller
     $ControllerClass = new $ControllerClass(
         $ModelClass,

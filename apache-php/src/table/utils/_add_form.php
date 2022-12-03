@@ -1,8 +1,3 @@
-<?php
-// $table_headers
-// $table_data
-?>
-
 <script type="text/javascript">
   window.addEventListener("DOMContentLoaded", function () {
     document.getElementById('addModalForm').addEventListener("submit", function (e) {
@@ -27,8 +22,15 @@
     };
     data["table"] = <?php echo '"' . currentFile() . '";'; ?>
     str_data = JSON.stringify(data);
-    await ftch('POST', '/api/table_api.php', str_data);
-    //reload_page();
+    displayError('StatusMSGAdd');
+    toggleFormButtons(true);
+    var response = await ftch('POST', '/api/table_api.php', str_data);
+    toggleFormButtons(false);
+    if (response["status"] != 0) {
+     displayError('StatusMSGAdd', response["message"]);
+    } else {
+     reload_page();
+    }
   }
 </script>
 
@@ -51,7 +53,8 @@
             }
           }
           ?>
-          <button class="w-100 mb-2 btn btn-lg rounded-3 btn-primary" type="submit">Отправить</button>
+          <p id="StatusMSGAdd"></p>
+          <button class="formBTN w-100 mb-2 btn btn-lg rounded-3 btn-primary" type="submit">Отправить</button>
         </form>
       </div>
     </div>

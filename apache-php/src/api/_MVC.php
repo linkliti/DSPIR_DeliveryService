@@ -15,6 +15,17 @@ class apiController extends baseController
         $jsondata = json_decode($data, true);
         return $jsondata;
     }
+
+    protected function checkIDArray($array, $table) {
+        foreach ($array as $id) {
+            $message = $this->model->checkIDinTable($table, $id);
+            if ($message == null) {
+                $this->view->outputStatus(1, 'Missing ID: ' . $id);
+                return false;
+            }
+        }
+        return true;
+    }
 }
 class apiModel extends baseModel
 {
@@ -41,17 +52,34 @@ class apiModel extends baseModel
     {
         $table = ucfirst($table);
         $id_name = substr($table, 0, -1);
-        $query = "SELECT id_" . $id_name . " FROM " . $table . " WHERE id_" . $id_name . " = " . $id . ";";
+        $query = "SELECT id_" . $id_name . " FROM " . $table
+        . " WHERE id_" . $id_name . " = " . $id . ";";
         $result = $this->mysqli->query($query);
         return $result->fetch_row();
     }
 
-    public function deleteFromTable($table, $id) {
+    public function deleteFromTable($table, $ids) {
         $table = ucfirst($table);
-        $id_name = substr($table, 0, -1);
-        $query = "DELETE FROM " . $table . " WHERE id_". $id_name . " = " . $id . ";";
+        $id_name = "id_" . substr($table, 0, -1);
+        $query = "DELETE FROM " . $table
+        . " WHERE " . $id_name . " IN (" . implode(', ', $ids) . ");";
         $this->mysqli->query($query);
-        return $id;
+    }
+
+    public function addToTable($table, $data, $headers)
+    {
+        $table = ucfirst($table);
+        $query = "INSERT INTO " . $table
+        . " (" . implode(', ', $headers) . ") VALUES (" . implode(', ', $data) . ");";
+        $this->mysqli->query($query);
+    }
+
+    public function updateTable($table, $var, $val, $ids) {
+        $table = ucfirst($table);
+        $id_name = "id_" . substr($table, 0, -1);
+        $query = "UPDATE " . $table . " SET " . $var . " = " . $val
+        . " WHERE " . $id_name . " IN (" . implode(', ', $ids) . ");";
+        $this->mysqli->query($query);
     }
 
 }

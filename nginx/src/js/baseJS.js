@@ -14,24 +14,35 @@ function params_result() {
 }
 
 async function ftch(request_type, target_link, data) {
-    var response = await fetch(window.location.origin + target_link, params(request_type, data))
+    if (request_type === "GET") {
+        var link = window.location.origin + target_link + "?" + new URLSearchParams(JSON.parse(data));
+        var response = await fetch(link, params_result());
+    } else {
+        var link = window.location.origin + target_link;
+        var response = await fetch(link, params(request_type, data));
+    }
     if (response.ok) {
         var json = await response.json();
         return json;
     } else {
-        alert("Не удалось отправить запрос");
+        var json = {"status": 2, "message": "Не удалось отправить запрос"};
+        return json;
     }
 }
 
+function toggleFormButtons(bool_param) {
+    var buttons = document.getElementsByClassName('formBTN')
+    for (var i = 0; i < buttons.length; i++) {
+        buttons[i].disabled = bool_param;
+    }
+}
 
-async function ftch_get(target_link, data) {
-    var link = window.location.origin + target_link + "?" + new URLSearchParams(JSON.parse(data))
-    var response = await fetch(link, params_result());
-    if (response.ok) {
-        var json = await response;
-        console.log(json);
+function displayError(id, msg = '') {
+    var field = document.getElementById(id);
+    if (msg) {
+        field.innerHTML = '<span class="fw-bold text-danger">Ошибка: </span> ' + msg;
     } else {
-        alert("Ошибка получения заказа, попробуйте еще раз");
+        field.innerHTML = 'Отправка запроса...';
     }
 }
 
