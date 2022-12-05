@@ -82,6 +82,14 @@ class apiModel extends baseModel
         $this->mysqli->query($query);
     }
 
+    public function getAuthData($login)
+    {
+        $query = "CALL getAuthData(" . wrap($login) . ");";
+        $result = $this->mysqli->query($query);
+        $result = $result->fetch_row();
+        return $result;
+    }
+
 }
 class apiView extends baseView
 {

@@ -29,7 +29,7 @@ try {
       if ($table) {
         $ids = $json["data"]["ids"];
         // Check if ids exists
-        if (!($$cont->checkIDArray($ids, $table))) {
+        if (!$$cont->checkIDArray($ids, $table)) {
           return;
         }
         // Delete entries
@@ -53,7 +53,7 @@ try {
         // Check if data is correct
         if (in_array($var, $table_data, true) and isset($val) and is_array($ids)) {
           // Check if ids exists
-          if (!($$cont->checkIDArray($json["data"]["ids"], $table))) {
+          if (!$$cont->checkIDArray($json["data"]["ids"], $table)) {
             return;
           }
           $$cont->model->updateTable($table, $var, $val, $ids);

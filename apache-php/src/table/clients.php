@@ -1,6 +1,9 @@
 <?php
+if (!checkPrivilege('manager')) {
+  echo 'Недостаточно привелегий для показа данной страницы';
+  return;
+}
 $table_headers = array('', 'ID клиента', 'ФИО', 'Тел Номер', 'Почта', 'Тип');
-
 ?>
 
 <div class="container-lg pt-4">

@@ -1,4 +1,25 @@
 <?php
+# Check privileges
+function checkPrivilege($role) {
+    # if role = 'is_auth' - return if session authorised
+    if ($role == 'is_auth') return isset($_SESSION['role']);
+    # Not authorised
+    if (!isset($_SESSION['role'])) return false;
+    $user_role = $_SESSION['role'];
+    # Admin - allow all
+    if ($user_role == 'admin') return true;
+    # Multiple alowed roles
+    if (is_array($role)) {
+        if (in_array($user_role, $role)) {
+            return true;
+        }
+    }
+    # Singel alowed role
+    else if ($user_role == $role) return true;
+    # Not allowed
+    return false;
+}
+
 # MySQL Connection
 function openmysqli(): mysqli {
     $connection = new mysqli('mysql', 'user', 'password', 'DeliveryService');

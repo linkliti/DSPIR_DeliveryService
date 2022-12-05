@@ -1,4 +1,8 @@
 <?php
+if (!checkPrivilege(array('manager', 'driver'))) {
+  echo 'Недостаточно привелегий для показа данной страницы';
+  return;
+}
 $table_headers = array('', 'ID доставки', 'ID позиции', 'ID клиента', 'ID ПВЗ', 'ID Сборщика', 'Сумма', 'Дата доставки', 'Статус');
 ?>
 

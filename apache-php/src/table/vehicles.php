@@ -1,4 +1,8 @@
 <?php
+if (!checkPrivilege('driver')) {
+  echo 'Недостаточно привелегий для показа данной страницы';
+  return;
+}
 $table_headers = array('', 'ID авто', 'ТС', 'Марка', 'Гос Номер');
 
 ?>

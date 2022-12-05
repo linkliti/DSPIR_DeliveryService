@@ -33,8 +33,8 @@ CREATE TABLE IF NOT EXISTS `Vehicles` (
 -- Таблица `Workers`
 CREATE TABLE IF NOT EXISTS `Workers` (
     `id_Worker` INT NOT NULL AUTO_INCREMENT,
-    `User_login` VARCHAR(45) NOT NULL,
-    `User_pass` VARCHAR(128) NOT NULL,
+    `User_login` VARCHAR(255) NOT NULL,
+    `User_pass` VARCHAR(255) NOT NULL,
     `Fullname` VARCHAR(45) NOT NULL,
     `Post` VARCHAR(45) NOT NULL,
     `Salary` FLOAT NOT NULL,
@@ -101,13 +101,13 @@ VALUES ( 'Главный', 'Россия, Г. Москва, Большой Гн�
 
 -- https://www.web2generators.com/apache-tools/htpasswd-generator
 INSERT INTO Workers ( User_login, User_pass, Fullname, Post, Salary, WorkerType, Shift, Statistic, Revenue, Vehicles_id_Vehicle )
-VALUES ( 'worker1', '$apr1$xmdu072q$CjUBSyHrUCHp/1aL7FfIH/', 'Жиглов Данила Денисович', 'Администратор', 65000, 0, '5/2', 0, 0, 1 ),
-    ( 'worker2', '$apr1$c9jygoun$piNJXQCsfku/8iyhTQRXd.', 'Новохацкий Константин Никитович', 'Водитель-экспедитор', 80000, 1, '5/2', 102, 236353, 4 ),
-    ( 'worker3', '$apr1$rtbcn3ad$lq91jMi35l1WRDN.jhfjK1', 'Райан Томас Гослинг', 'Водитель-экспедитор', 120000, 1, '6/1', 156, 567263, 3 ),
-    ( 'worker4', '$apr1$rpn1zq7g$HLsEH9eRimdorcvyC0NiK0', 'Осокина Виктория Прокловна', 'Менеджер', 40000, 1, '5/2', 0, 0, 1 ),
-    ( 'worker5', '$apr1$lknzx08g$e3PQr0NXCNnOOGXziqkjW1', 'Бурда Настасья Всеволодовна', 'Бухгалтер', 60000, 1, '5/2', 0, 0, 1 ),
-    ( 'worker6', '$apr1$wlhu2vpo$iWmX0o8WUoOIo75b.v4N71', 'Акимова Афанасия Петровна', 'Сборщик', 30000, 0, '3/3', 152, 0, 1 ),
-    ( 'worker7', '$apr1$exmqzonl$hJYCvNP/C8S8odzEYSwJe/', 'Квасников Егор Арсеньевич', 'Сборщик', 45000, 1, '5/3', 364, 0, 1 );
+VALUES ( 'worker1', '$2y$10$0ZyAySYiysfm0SR.9yfZZucUT7VMT4/ToorGZDaAtIHSyH0dzzlf.', 'Жиглов Данила Денисович', 'admin', 65000, 0, '5/2', 0, 0, 1 ),
+    ( 'worker2', '$2y$10$Sy2dmvAuSAHHEUggmqRRnOrKQWymNA/Ii87ARhClCcE0Q2NpsD6NK', 'Новохацкий Константин Никитович', 'driver', 80000, 1, '5/2', 102, 236353, 4 ),
+    ( 'worker3', '$2y$10$Sy2dmvAuSAHHEUggmqRRnOrKQWymNA/Ii87ARhClCcE0Q2NpsD6NK', 'Райан Томас Гослинг', 'driver', 120000, 1, '6/1', 156, 567263, 3 ),
+    ( 'worker4', '$2y$10$Sy2dmvAuSAHHEUggmqRRnOrKQWymNA/Ii87ARhClCcE0Q2NpsD6NK', 'Осокина Виктория Прокловна', 'manager', 40000, 1, '5/2', 0, 0, 1 ),
+    ( 'worker5', '$2y$10$Sy2dmvAuSAHHEUggmqRRnOrKQWymNA/Ii87ARhClCcE0Q2NpsD6NK', 'Бурда Настасья Всеволодовна', 'manager', 60000, 1, '5/2', 0, 0, 1 ),
+    ( 'worker6', '$2y$10$Sy2dmvAuSAHHEUggmqRRnOrKQWymNA/Ii87ARhClCcE0Q2NpsD6NK', 'Акимова Афанасия Петровна', 'assembler', 30000, 0, '3/3', 152, 0, 1 ),
+    ( 'worker7', '$2y$10$Sy2dmvAuSAHHEUggmqRRnOrKQWymNA/Ii87ARhClCcE0Q2NpsD6NK', 'Квасников Егор Арсеньевич', 'assembler', 45000, 1, '5/3', 364, 0, 1 );
 
 INSERT INTO Positions ( Position, PositionType, PositionLocation, Workers_id_Worker )
 VALUES ('Стул', 'Мебель', 'A1B1', 6),
@@ -183,6 +183,16 @@ WHERE id_Order = id;
 END /
 DELIMITER ;
 
+-- Процедура получения данных пользователя
+DROP PROCEDURE IF EXISTS getAuthData;
+DELIMITER /
+CREATE PROCEDURE getAuthData(login_input varchar(255)) BEGIN
+SELECT Fullname, User_pass, Post, id_Worker
+FROM Workers
+WHERE User_login = login_input;
+END /
+DELIMITER ;
+
 -- Функция отображения статуса
 DROP FUNCTION IF EXISTS friendly_DeliveryStatus;
 DELIMITER /
@@ -210,6 +220,47 @@ BEGIN
         RETURN(friendly_msg);
 	ELSEIF typenum = 5 THEN
 		SET friendly_msg = 'Заказ получен клиентом';
+        RETURN(friendly_msg);
+	END IF;
+END /
+DELIMITER ;
+
+DROP FUNCTION IF EXISTS friendly_Post;
+DELIMITER /
+CREATE FUNCTION friendly_Post(typenum varchar(45))
+RETURNS	varchar(45) DETERMINISTIC
+BEGIN
+	DECLARE friendly_msg varchar(45);
+    IF typenum = 'admin' THEN
+		SET friendly_msg = 'Администратор';
+        RETURN(friendly_msg);
+	ELSEIF typenum = 'driver' THEN
+		SET friendly_msg = 'Водитель';
+        RETURN(friendly_msg);
+	ELSEIF typenum = 'manager' THEN
+		SET friendly_msg = 'Менеджер';
+        RETURN(friendly_msg);
+	ELSEIF typenum = 'assembler' THEN
+		SET friendly_msg = 'Сборщик ';
+        RETURN(friendly_msg);
+	END IF;
+END /
+DELIMITER ;
+
+DROP FUNCTION IF EXISTS friendly_ClientType;
+DELIMITER /
+CREATE FUNCTION friendly_ClientType(typenum varchar(45))
+RETURNS	varchar(45) DETERMINISTIC
+BEGIN
+	DECLARE friendly_msg varchar(45);
+    IF typenum = 0 THEN
+		SET friendly_msg = '0 (Новый)';
+        RETURN(friendly_msg);
+	ELSEIF typenum = 1 THEN
+		SET friendly_msg = '1 (Обычный)';
+        RETURN(friendly_msg);
+	ELSEIF typenum = 2 THEN
+		SET friendly_msg = '2 (Льготный)';
         RETURN(friendly_msg);
 	END IF;
 END /

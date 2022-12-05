@@ -5,30 +5,57 @@ try {
     switch ($_SERVER['REQUEST_METHOD']) {
         // loginUser
         case 'POST':
-            break;
+            $login = $json["data"]["login"];
+            $pass = $json["data"]["pass"];
+            $result = $$cont->model->getAuthData($login);
+            if ($result) {
+                if (password_verify($pass, $result[1])) {
+                    $_SESSION['fio'] = $result[0];
+                    $_SESSION['login'] = $login;
+                    $_SESSION['role'] = $result[2];
+                    $_SESSION['id'] = $result[3];
+                    $$cont->view->outputStatus(0, "Auth successful as " . $result[0]);
+                    return;
+                }
+            }
+            $$cont->view->outputStatus(1, "Wrong login or password");
+            return;
 
         // exitLogin
         case 'DELETE':
-            $preserve_theme = $_SESSION['theme'];
-            session_destroy();
-            session_start();
-            $_SESSION['theme'] = $preserve_theme;
-            header("location: /home/home.php");
-            break;
+            if ($json["deAuth"]) {
+                if (!isset($_SESSION["role"])) {
+                    $$cont->view->outputStatus(1, "Session not authorised");
+                    return;
+                }
+                $preserve_theme = $_SESSION['theme'];
+                session_destroy();
+                session_start();
+                $_SESSION['theme'] = $preserve_theme;
+                $$cont->view->outputStatus(0, "DeAuth successful");
+            }
+            else {
+                $$cont->view->outputStatus(1, "Wrong input");
+            }
+            return;
 
         // changeTheme
         case 'PATCH':
-            $theme = $_SESSION['theme'] ?? false;
-            $_SESSION['theme'] = !$theme;
-            $theme_str = !$theme ? 'true' : 'false';
-            $$cont->view->outputStatus(0, "Theme toggle: " . $theme_str);
-            break;
+            if ($json["theme"]) {
+                $theme = $_SESSION['theme'] ?? false;
+                $_SESSION['theme'] = !$theme;
+                $theme_str = !$theme ? 'true' : 'false';
+                $$cont->view->outputStatus(0, "Theme toggle: " . $theme_str);
+            } else {
+                $$cont->view->outputStatus(1, "Wrong input");
+            }
+            return;
 
         // getOrderStatus
         case 'GET':
             $result = $$cont->model->getOrderStatus($_GET['order']);
             $$cont->view->outputStatus(0, $result[0], $result[1]);
-            break;
+            return;
 
         // Error
         default:

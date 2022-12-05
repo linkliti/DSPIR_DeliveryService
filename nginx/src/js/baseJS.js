@@ -22,8 +22,8 @@ async function ftch(request_type, target_link, data) {
         var response = await fetch(link, params(request_type, data));
     }
     if (response.ok) {
-        var json = await response.json();
-        return json;
+        var json = await response;
+        return json.json();
     } else {
         var json = {"status": 2, "message": "Не удалось отправить запрос"};
         return json;
@@ -68,7 +68,7 @@ function changeTheme() {
     noReloadChangeTheme()
     document.getElementById("themeToggle").disabled = true;
     setTimeout(function () { document.getElementById("themeToggle").disabled = false; }, 250);
-    ftch('PATCH', '/api/user_api.php', {"theme": true})
+    ftch('PATCH', '/api/user_api.php', '{"theme": true}')
 }
 
 // Cover string with commas

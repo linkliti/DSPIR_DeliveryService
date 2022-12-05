@@ -3,7 +3,7 @@
 </head>
 <div class="container">
   <div class="px-4 py-5 my-5 text-center">
-    <img class="d-block mx-auto mb-4" src="https://www.graphicpie.com/wp-content/uploads/2020/11/red-among-us-png.png" alt="" width="72" height="57">
+    <img class="d-block mx-auto mb-4" src="/images/logo.png" alt="" width="100" height="100">
     <h1 class="display-5 fw-bold">Отслеживание</h1>
     <div class="col-lg-6 mx-auto">
       <p id="StatusMSG" class="lead mb-4">Введите номер заказа для отображения его состояния</p>
