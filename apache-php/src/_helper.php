@@ -14,7 +14,7 @@ function checkPrivilege($role) {
             return true;
         }
     }
-    # Singel alowed role
+    # Single alowed role
     else if ($user_role == $role) return true;
     # Not allowed
     return false;

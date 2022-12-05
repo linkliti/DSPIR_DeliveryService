@@ -47,8 +47,8 @@
           foreach ($table_data as $i => $data) {
             if ($i > 1) {
               echo '<div class="form-floating mb-3">';
-              echo '<input type="text" required  class="form-control rounded-3" id="floatingInput" placeholder="' . $table_headers[$i] . '">';
-              echo '<label for="floatingInput">' . $table_headers[$i] . '</label>';
+              echo '<input type="text" required  class="form-control rounded-3" id="floatingInput" placeholder="' . $table_headers_modify[$i] . '">';
+              echo '<label for="floatingInput">' . $table_headers_modify[$i] . '</label>';
               echo '</div>';
             }
           }

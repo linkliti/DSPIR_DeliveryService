@@ -13,7 +13,7 @@
 <div class="container">
   <?php
   if (checkPrivilege('is_auth')) {
-    echo '<h3 class="my-5 fw-bold lh-1 mb-3">Добро пожаловать '. $_SESSION['fio'] .'</h3>';
+    echo '<h3 class="my-5 fw-bold lh-1 mb-3 text-center">Добро пожаловать '. $_SESSION['fio'] .'</h3>';
   }
   ?>
   <div class="px-4 py-5 my-5 text-center">
@@ -23,7 +23,14 @@
       <p class="lead mb-4">Мы оказываем людям и компаниям спектр услуг своевременной и гарантированной доставки, постоянно повышая уровень сервиса, внедряя новые технологии, эффективно используя внутренний потенциал и внешние ресурсы.</p>
       <div class="d-grid gap-2 d-sm-flex justify-content-sm-center">
         <a class="btn btn-primary btn-lg px-4 gap-3" href="/home/track.php" role="button">Отслеживание</a>
-        <button type="button" class="btn btn-primary btn-lg px-4" data-bs-toggle="modal" data-bs-target="#loginModal">Авторизация</button>
+        <?php
+        if (checkPrivilege('is_auth')) {
+          echo '<button type="button" class="formBTN btn btn-primary btn-lg px-4" onclick="deAuth()">Выход</button>';
+        }
+        else {
+          echo '<button type="button" class="btn btn-primary btn-lg px-4" data-bs-toggle="modal" data-bs-target="#loginModal">Авторизация</button>';
+        }
+        ?>
       </div>
     </div>
   </div>

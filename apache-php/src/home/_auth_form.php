@@ -17,7 +17,6 @@
         var response = await ftch('POST', '/api/user_api.php', str_data);
         toggleFormButtons(false);
         if (response["status"] != 0) {
-            required
             displayError('StatusMSGAuth', response["message"]);
         } else {
             window.location.href = '/home/home.php'

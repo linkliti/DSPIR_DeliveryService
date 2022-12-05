@@ -1,16 +1,13 @@
 <?php
 if (!checkPrivilege('driver')) {
-  echo 'Недостаточно привелегий для показа данной страницы';
+  require_once getFileFromRoot('/table/utils/_access_denied_msg.php');
   return;
 }
-$table_headers = array('', 'ID авто', 'ТС', 'Марка', 'Гос Номер');
-
+require_once getFileFromRoot('/table/utils/_table_data.php');
 ?>
 
 <div class="container-lg pt-4">
   <?php
-  require_once getFileFromRoot('/table/utils/_table_data.php');
-  $table_data = getTableFormData(currentFile());
   require_once getFileFromRoot('/table/utils/_add_form.php');
   require_once getFileFromRoot('/table/utils/_modify_form.php');
   require_once getFileFromRoot('/table/utils/_delete_form.php');

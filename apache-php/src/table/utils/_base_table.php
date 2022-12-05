@@ -59,7 +59,7 @@
   <thead class="table-dark">
     <tr>
       <?php
-      foreach ($table_headers as $header) {
+      foreach ($table_headers_show as $header) {
         echo "<td>" . $header . "</td>";
       }
       ?>
@@ -70,11 +70,16 @@
     $tableData = 'table'; // ignore error
     if ($$tableData->num_rows > 0) {
       foreach ($$tableData as $entry) {
-        echo "<tr>";
-        foreach ($table_data as $data) {
-          echo "<td>" . $entry[$data] . "</td>";
+        if (!$ignore_first) { // ignore first entry
+          $entry = array_values($entry); // remove data type
+          array_unshift($entry, $entry[0]); // dupe row ID for checkboxes
+          echo "<tr>";
+          for ($i = 0; $i < count($entry); $i++) {
+            echo "<td>" . $entry[$i] . "</td>"; // Add all data in entry to table
+          }
+          echo "</tr>";
         }
-        echo "</tr>";
+        else $ignore_first = false;
       }
     } else {
       echo '';

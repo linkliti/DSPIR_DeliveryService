@@ -56,6 +56,7 @@ if (checkPrivilege('manager')) {
           echo ($_SERVER['REQUEST_URI'] == $key) ? 'active' : '';
           echo '" aria-current="page" href="' . $key . '">' . $value . '</a></li>';
         }
+        # DeAuth button
         if (isset($_SESSION['role'])) {
           echo '<li class="nav-item d-flex align-items-center"><button id="deauthBTN" role="button" class="btn btn-link nav-link" aria-current="page" onclick="deAuth()">Выход</button></li>';
         }

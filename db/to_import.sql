@@ -6,7 +6,6 @@ CREATE TABLE IF NOT EXISTS `Pvzs` (
     `id_Pvz` INT NOT NULL AUTO_INCREMENT,
     `PVZ` VARCHAR(45) NOT NULL,
     `Address` VARCHAR(100) NOT NULL,
-    `WorkersAmount` INT NOT NULL,
     `PVZ_Schedule` VARCHAR(45) NOT NULL,
     PRIMARY KEY (`id_Pvz`)
 )  ENGINE=INNODB;
@@ -40,14 +39,12 @@ CREATE TABLE IF NOT EXISTS `Workers` (
     `Salary` FLOAT NOT NULL,
     `WorkerType` INT NOT NULL,
     `Shift` VARCHAR(45) NOT NULL,
-    `Statistic` VARCHAR(45) NOT NULL DEFAULT 0,
-    `Revenue` FLOAT NOT NULL DEFAULT 0,
     `Vehicles_id_Vehicle` INT NOT NULL DEFAULT 1,
     PRIMARY KEY (`id_Worker`),
     FOREIGN KEY (`Vehicles_id_Vehicle`) REFERENCES `Vehicles` (`id_Vehicle`)
 ) ENGINE = InnoDB;
 
--- Таблица `Warehouse`
+-- Таблица `Positions`
 CREATE TABLE IF NOT EXISTS `Positions` (
     `id_Position` INT NOT NULL AUTO_INCREMENT,
     `Position` VARCHAR(45) NOT NULL,
@@ -79,35 +76,37 @@ USE `DeliveryService`;
 -- Таблицы
 INSERT INTO Clients (Fullname, PhoneNumber, Email, ClientType)
 VALUES ( 'Яндульская Марианна Игнатьевна', '+7 (959) 746-44-72', 'marianna59@yandex.ru', 0 ),
-( 'Янишпольская Алиса Сергеевна', '+7 (930) 732-56-48', 'alisa43@outlook.com', 2 ),
-( 'Фаммус Егор Степанович', '+7 (958) 271-76-69', 'egor.fammus@outlook.com', 1 ),
-( 'Низамутдинов Василий Дмитриевич', '+7 (975) 305-75-77', 'vasiliy1987@gmail.com', 2 ),
-( 'Вазова Инна Севастьяновна', '+7 (993) 648-20-44', 'inna.vazova@mail.ru', 1 );
+    ( 'Янишпольская Алиса Сергеевна', '+7 (930) 732-56-48', 'alisa43@outlook.com', 2 ),
+    ( 'Фаммус Егор Степанович', '+7 (958) 271-76-69', 'egor.fammus@outlook.com', 1 ),
+    ( 'Низамутдинов Василий Дмитриевич', '+7 (975) 305-75-77', 'vasiliy1987@gmail.com', 2 ),
+    ( 'Вазова Инна Севастьяновна', '+7 (993) 648-20-44', 'inna.vazova@mail.ru', 1 );
 
 INSERT INTO Vehicles (Vehicle, VIN, GovNumber)
-VALUES ('Не водитель', ' ', ' '),
+VALUES
+    ('Без ТС', ' ', ' '),
     ( 'Geely Emgrand EC7', 'KS6TV944473456755', 'С866ТК84' ),
     ('Audi A2', 'GX0VX855518853187', 'Е108УВ46'),
     ('Audi A3', 'KR8SF943860695598', 'М708ЕК18'),
     ('BMW X3 M', 'FX0HU884196530198', 'Х960НВ84'),
     ('BMW M5', 'YR9EG774652155467', 'В581ВЕ06');
 
-INSERT INTO Pvzs (PVZ, Address, WorkersAmount, PVZ_Schedule)
-VALUES ( 'Главный', 'Россия, Г. Москва, Большой Гнездниковский пер., 3', 27, '5/2' ),
-    ( 'Восточный', 'Россия, Г. Москва, Кусковская ул., 17, стр. 1', 17, '5/2' ),
-    ( 'Западный', 'Россия, Г. Москва, Союзная ул., 1В, Одинцовоподъезд №2, помещение №102', 12, '5/2' ),
-    ( 'Северный', 'Россия, Г. Москва, Окружная ул., 13, Лобня', 7, '7/0' ),
-    ( 'Южный', 'Россия, Г. Москва, Севастопольский просп., 51, корп. 2', 18, '5/2' );
+INSERT INTO Pvzs (PVZ, Address, PVZ_Schedule)
+VALUES ('ПВЗ не указан', ' ', ' '),
+    ( 'Главный', 'Россия, Г. Москва, Большой Гнездниковский пер., 3', '5/2' ),
+    ( 'Восточный', 'Россия, Г. Москва, Кусковская ул., 17, стр. 1', '5/2' ),
+    ( 'Западный', 'Россия, Г. Москва, Союзная ул., 1В, Одинцовоподъезд №2, помещение №102', '5/2' ),
+    ( 'Северный', 'Россия, Г. Москва, Окружная ул., 13, Лобня', '7/0' ),
+    ( 'Южный', 'Россия, Г. Москва, Севастопольский просп., 51, корп. 2', '5/2' );
 
--- https://www.web2generators.com/apache-tools/htpasswd-generator
-INSERT INTO Workers ( User_login, User_pass, Fullname, Post, Salary, WorkerType, Shift, Statistic, Revenue, Vehicles_id_Vehicle )
-VALUES ( 'worker1', '$2y$10$0ZyAySYiysfm0SR.9yfZZucUT7VMT4/ToorGZDaAtIHSyH0dzzlf.', 'Жиглов Данила Денисович', 'admin', 65000, 0, '5/2', 0, 0, 1 ),
-    ( 'worker2', '$2y$10$Sy2dmvAuSAHHEUggmqRRnOrKQWymNA/Ii87ARhClCcE0Q2NpsD6NK', 'Новохацкий Константин Никитович', 'driver', 80000, 1, '5/2', 102, 236353, 4 ),
-    ( 'worker3', '$2y$10$Sy2dmvAuSAHHEUggmqRRnOrKQWymNA/Ii87ARhClCcE0Q2NpsD6NK', 'Райан Томас Гослинг', 'driver', 120000, 1, '6/1', 156, 567263, 3 ),
-    ( 'worker4', '$2y$10$Sy2dmvAuSAHHEUggmqRRnOrKQWymNA/Ii87ARhClCcE0Q2NpsD6NK', 'Осокина Виктория Прокловна', 'manager', 40000, 1, '5/2', 0, 0, 1 ),
-    ( 'worker5', '$2y$10$Sy2dmvAuSAHHEUggmqRRnOrKQWymNA/Ii87ARhClCcE0Q2NpsD6NK', 'Бурда Настасья Всеволодовна', 'manager', 60000, 1, '5/2', 0, 0, 1 ),
-    ( 'worker6', '$2y$10$Sy2dmvAuSAHHEUggmqRRnOrKQWymNA/Ii87ARhClCcE0Q2NpsD6NK', 'Акимова Афанасия Петровна', 'assembler', 30000, 0, '3/3', 152, 0, 1 ),
-    ( 'worker7', '$2y$10$Sy2dmvAuSAHHEUggmqRRnOrKQWymNA/Ii87ARhClCcE0Q2NpsD6NK', 'Квасников Егор Арсеньевич', 'assembler', 45000, 1, '5/3', 364, 0, 1 );
+INSERT INTO Workers ( User_login, User_pass, Fullname, Post, Salary, WorkerType, Shift, Vehicles_id_Vehicle )
+VALUES (' ', ' ', 'Сотрудник не указан', ' ', 0, 0,  ' ', 1),
+    ( 'worker1', '$2y$10$0ZyAySYiysfm0SR.9yfZZucUT7VMT4/ToorGZDaAtIHSyH0dzzlf.', 'Жиглов Данила Денисович', 'admin', 65000, 1, '5/2', 1 ),
+    ( 'worker2', '$2y$10$Sy2dmvAuSAHHEUggmqRRnOrKQWymNA/Ii87ARhClCcE0Q2NpsD6NK', 'Новохацкий Константин Никитович', 'driver', 80000, 1, '5/2', 4 ),
+    ( 'worker3', '$2y$10$Sy2dmvAuSAHHEUggmqRRnOrKQWymNA/Ii87ARhClCcE0Q2NpsD6NK', 'Райан Томас Гослинг', 'driver', 120000, 1, '6/1', 3 ),
+    ( 'worker4', '$2y$10$Sy2dmvAuSAHHEUggmqRRnOrKQWymNA/Ii87ARhClCcE0Q2NpsD6NK', 'Осокина Виктория Прокловна', 'manager', 40000, 2, '5/2', 1 ),
+    ( 'worker5', '$2y$10$Sy2dmvAuSAHHEUggmqRRnOrKQWymNA/Ii87ARhClCcE0Q2NpsD6NK', 'Бурда Настасья Всеволодовна', 'manager', 60000, 1, '5/2', 1 ),
+    ( 'worker6', '$2y$10$Sy2dmvAuSAHHEUggmqRRnOrKQWymNA/Ii87ARhClCcE0Q2NpsD6NK', 'Акимова Афанасия Петровна', 'assembler', 30000, 0, '3/3', 1 ),
+    ( 'worker7', '$2y$10$Sy2dmvAuSAHHEUggmqRRnOrKQWymNA/Ii87ARhClCcE0Q2NpsD6NK', 'Квасников Егор Арсеньевич', 'assembler', 45000, 2, '5/3', 1 );
 
 INSERT INTO Positions ( Position, PositionType, PositionLocation, Workers_id_Worker )
 VALUES ('Стул', 'Мебель', 'A1B1', 6),
@@ -129,7 +128,7 @@ VALUES (4, 3, 5, 2, 500, '20221030', 4),
 DROP PROCEDURE IF EXISTS getclientsTable;
 DELIMITER /
 CREATE PROCEDURE getclientsTable() BEGIN
-SELECT *
+SELECT id_Client, Fullname, PhoneNumber, Email, friendly_ClientType(ClientType)
 FROM Clients;
 END /
 DELIMITER ;
@@ -137,15 +136,19 @@ DELIMITER ;
 DROP PROCEDURE IF EXISTS getordersTable;
 DELIMITER /
 CREATE PROCEDURE getordersTable() BEGIN
-SELECT *
-FROM Orders;
+SELECT id_Order, Positions_id_Position, Positions.Position, Clients_id_Client, Clients.Fullname, Pvzs_id_Pvz, Pvzs.PVZ, Orders.Workers_id_Worker, Workers.Fullname AS WFullname, DeliveryAmount, DeliveryDateTime, DeliveryStatus ,friendly_DeliveryStatus(DeliveryStatus)
+FROM Orders
+INNER JOIN Clients ON Clients.id_Client = Orders.Clients_id_Client
+INNER JOIN Pvzs ON Pvzs.id_PVZ = Orders.Pvzs_id_PVZ
+INNER JOIN Workers ON Workers.id_Worker = Orders.Workers_id_Worker
+INNER JOIN Positions ON Positions.id_Position = Orders.Positions_id_Position;
 END /
 DELIMITER ;
 
 DROP PROCEDURE IF EXISTS getpvzsTable;
 DELIMITER /
 CREATE PROCEDURE getpvzsTable() BEGIN
-SELECT *
+SELECT id_Pvz, PVZ, Address, PVZ_Schedule
 FROM Pvzs;
 END /
 DELIMITER ;
@@ -153,7 +156,7 @@ DELIMITER ;
 DROP PROCEDURE IF EXISTS getvehiclesTable;
 DELIMITER /
 CREATE PROCEDURE getvehiclesTable() BEGIN
-SELECT *
+SELECT id_Vehicle, Vehicle, VIN, GovNumber
 FROM Vehicles;
 END /
 DELIMITER ;
@@ -161,16 +164,18 @@ DELIMITER ;
 DROP PROCEDURE IF EXISTS getpositionsTable;
 DELIMITER /
 CREATE PROCEDURE getpositionsTable() BEGIN
-SELECT *
-FROM Positions;
+SELECT id_Position, Position, PositionType, PositionLocation, Workers_id_Worker, Workers.Fullname
+FROM Positions
+INNER JOIN Workers ON Workers.id_Worker = Positions.Workers_id_Worker;
 END /
 DELIMITER ;
 
 DROP PROCEDURE IF EXISTS getworkersTable;
 DELIMITER /
 CREATE PROCEDURE getworkersTable() BEGIN
-SELECT *
-FROM Workers;
+SELECT id_Worker, User_login, Fullname, friendly_Post(Post), Salary, friendly_WorkerType(WorkerType), Shift, Vehicles_id_Vehicle, Vehicles.Vehicle
+FROM Workers
+INNER JOIN Vehicles ON Vehicles.id_Vehicle = Workers.Vehicles_id_Vehicle;
 END /
 DELIMITER ;
 -- Процедура получения статуса
@@ -187,7 +192,7 @@ DELIMITER ;
 DROP PROCEDURE IF EXISTS getAuthData;
 DELIMITER /
 CREATE PROCEDURE getAuthData(login_input varchar(255)) BEGIN
-SELECT Fullname, User_pass, Post, id_Worker
+SELECT Fullname, User_pass, Post, id_Worker, WorkerType
 FROM Workers
 WHERE User_login = login_input;
 END /
@@ -244,6 +249,7 @@ BEGIN
 		SET friendly_msg = 'Сборщик ';
         RETURN(friendly_msg);
 	END IF;
+    RETURN(typenum);
 END /
 DELIMITER ;
 
@@ -261,6 +267,25 @@ BEGIN
         RETURN(friendly_msg);
 	ELSEIF typenum = 2 THEN
 		SET friendly_msg = '2 (Льготный)';
+        RETURN(friendly_msg);
+	END IF;
+END /
+DELIMITER ;
+
+DROP FUNCTION IF EXISTS friendly_WorkerType;
+DELIMITER /
+CREATE FUNCTION friendly_WorkerType(typenum varchar(45))
+RETURNS	varchar(45) DETERMINISTIC
+BEGIN
+	DECLARE friendly_msg varchar(45);
+    IF typenum = 0 THEN
+		SET friendly_msg = '0 (Уволен)';
+        RETURN(friendly_msg);
+	ELSEIF typenum = 1 THEN
+		SET friendly_msg = '1 (Штатный)';
+        RETURN(friendly_msg);
+	ELSEIF typenum = 2 THEN
+		SET friendly_msg = '2 (Внештатный)';
         RETURN(friendly_msg);
 	END IF;
 END /
