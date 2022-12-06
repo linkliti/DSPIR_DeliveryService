@@ -8,10 +8,14 @@ try {
       $table = strstr($json["table"], '.', true) ?: '';
       if ($table) {
         require getFileFromRoot('/table/utils/_table_data.php');
-        $table_data = getTableFormData($json["table"]);
         $table_data = array_values(array_slice($table_data, 2));
+        /* Data checks */
         // Check if table headers correct
         if (array_keys($json["data"]) === $table_data) {
+          // Encrypt passwords
+          if ($table == 'workers')
+            $json["data"]["User_pass"] = $$cont->encryptPass($json["data"]["User_pass"]);
+          // Finally updating table
           $$cont->model->addToTable($table, array_values($json["data"]), $table_data);
           $$cont->view->outputStatus(0, 'Added entry to table ' . $table);
           return;
@@ -28,6 +32,7 @@ try {
       $table = strstr($json["table"], '.', true) ?: '';
       if ($table) {
         $ids = $json["data"]["ids"];
+        /* Data checks */
         // Check if ids exists
         if (!$$cont->checkIDArray($ids, $table)) {
           return;
@@ -45,17 +50,21 @@ try {
       $table = strstr($json["table"], '.', true) ?: '';
       if ($table) {
         require getFileFromRoot('/table/utils/_table_data.php');
-        $table_data = getTableFormData($json["table"]);
         $table_data = array_values(array_slice($table_data, 2));
         $var = $json["data"]["var"];
         $val = $json["data"]["val"];
         $ids = $json["data"]["ids"];
+        /* Data checks */
         // Check if data is correct
         if (in_array($var, $table_data, true) and isset($val) and is_array($ids)) {
-          // Check if ids exists
+          // Check if ids exists in array
           if (!$$cont->checkIDArray($json["data"]["ids"], $table)) {
             return;
           }
+          // Encrypt passwords
+          if ($table == 'workers' and $json["data"]["var"] == 'User_pass')
+            $json["data"]["var"] = $$cont->encryptPass($json["data"]["var"]);
+          // Finally updating table
           $$cont->model->updateTable($table, $var, $val, $ids);
           $$cont->view->outputStatus(0, 'Updated entries in ' . $table);
           return;

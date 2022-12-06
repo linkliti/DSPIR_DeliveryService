@@ -44,9 +44,7 @@
               <select id="UpdateVariable" class="form-select">
                 <?php
                 foreach ($table_data as $i => $data) {
-                  if ($i > 1) {
                     echo '<option value="' . $data . '">' . $table_headers_modify[$i] . '</option>';
-                  }
                 }
                 ?>
               </select>

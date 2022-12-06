@@ -1,27 +1,6 @@
 <?php
-$links = array();
-$links["/home/session_test.php"] = "Дебаг";
-if (checkPrivilege('admin')) {
-  $links["/userContent/test.php"] = "Тест";
-  $links["/table/workers.php"] = "Персонал";
-}
-if (checkPrivilege(array('driver', 'manager', 'assembler'))) {
-  $links["/table/orders.php"] = "Заказы";
-}
-if (checkPrivilege(array('manager', 'assembler'))) {
-  $links["/table/positions.php"] = "Склад";
-}
-if (checkPrivilege(array('manager', 'driver'))) {
-  $links["/table/pvzs.php"] = "Пункты выдачи";
-}
-if (checkPrivilege('driver')) {
-  $links["/table/vehicles.php"] = "Автомобили";
-}
-if (checkPrivilege('manager')) {
-  $links["/table/clients.php"] = "Клиенты";
-}
+require_once getFileFromRoot('/_templates/_navbar_privileges.php')
 ?>
-
 <script>
   async function deAuth() {
     var btn = document.getElementById('deauthBTN')

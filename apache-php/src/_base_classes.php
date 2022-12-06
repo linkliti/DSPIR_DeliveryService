@@ -54,8 +54,8 @@ class baseView
     }
     public function loadHeader()
     {
-        require_once getFileFromRoot('/_templates/html_header.php');
-        require_once getFileFromRoot('/_templates/page_header.php');
+        require_once getFileFromRoot('/_templates/_html_header.php');
+        require_once getFileFromRoot('/_templates/_page_header.php');
     }
 
     public function loadContent()
@@ -64,7 +64,7 @@ class baseView
     }
     public function loadFooter()
     {
-        require_once getFileFromRoot('/_templates/page_footer.php');
+        require_once getFileFromRoot('/_templates/_page_footer.php');
     }
     public function outputStatus($status, $message, $result='')
     {

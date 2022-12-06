@@ -105,7 +105,7 @@ VALUES (' ', ' ', 'Сотрудник не указан', ' ', 0, 0,  ' ', 1),
     ( 'worker3', '$2y$10$Sy2dmvAuSAHHEUggmqRRnOrKQWymNA/Ii87ARhClCcE0Q2NpsD6NK', 'Райан Томас Гослинг', 'driver', 120000, 1, '6/1', 3 ),
     ( 'worker4', '$2y$10$Sy2dmvAuSAHHEUggmqRRnOrKQWymNA/Ii87ARhClCcE0Q2NpsD6NK', 'Осокина Виктория Прокловна', 'manager', 40000, 2, '5/2', 1 ),
     ( 'worker5', '$2y$10$Sy2dmvAuSAHHEUggmqRRnOrKQWymNA/Ii87ARhClCcE0Q2NpsD6NK', 'Бурда Настасья Всеволодовна', 'manager', 60000, 1, '5/2', 1 ),
-    ( 'worker6', '$2y$10$Sy2dmvAuSAHHEUggmqRRnOrKQWymNA/Ii87ARhClCcE0Q2NpsD6NK', 'Акимова Афанасия Петровна', 'assembler', 30000, 0, '3/3', 1 ),
+    ( 'worker6', '$2y$10$Sy2dmvAuSAHHEUggmqRRnOrKQWymNA/Ii87ARhClCcE0Q2NpsD6NK', 'Акимова Афанасия Петровна', 'assembler', 30000, 1, '3/3', 1 ),
     ( 'worker7', '$2y$10$Sy2dmvAuSAHHEUggmqRRnOrKQWymNA/Ii87ARhClCcE0Q2NpsD6NK', 'Квасников Егор Арсеньевич', 'assembler', 45000, 2, '5/3', 1 );
 
 INSERT INTO Positions ( Position, PositionType, PositionLocation, Workers_id_Worker )
@@ -237,16 +237,16 @@ RETURNS	varchar(45) DETERMINISTIC
 BEGIN
 	DECLARE friendly_msg varchar(45);
     IF typenum = 'admin' THEN
-		SET friendly_msg = 'Администратор';
+		SET friendly_msg = 'admin (Администратор)';
         RETURN(friendly_msg);
 	ELSEIF typenum = 'driver' THEN
-		SET friendly_msg = 'Водитель';
+		SET friendly_msg = 'driver (Водитель)';
         RETURN(friendly_msg);
 	ELSEIF typenum = 'manager' THEN
-		SET friendly_msg = 'Менеджер';
+		SET friendly_msg = 'manager (Менеджер)';
         RETURN(friendly_msg);
 	ELSEIF typenum = 'assembler' THEN
-		SET friendly_msg = 'Сборщик ';
+		SET friendly_msg = 'assembler (Сборщик)';
         RETURN(friendly_msg);
 	END IF;
     RETURN(typenum);
@@ -279,7 +279,7 @@ RETURNS	varchar(45) DETERMINISTIC
 BEGIN
 	DECLARE friendly_msg varchar(45);
     IF typenum = 0 THEN
-		SET friendly_msg = '0 (Уволен)';
+		SET friendly_msg = '0 (Не сотрудник)';
         RETURN(friendly_msg);
 	ELSEIF typenum = 1 THEN
 		SET friendly_msg = '1 (Штатный)';

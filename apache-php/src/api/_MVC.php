@@ -26,6 +26,10 @@ class apiController extends baseController
         }
         return true;
     }
+    protected function encryptPass($pass)
+    {
+        return password_hash($pass, PASSWORD_DEFAULT);
+    }
 }
 class apiModel extends baseModel
 {
