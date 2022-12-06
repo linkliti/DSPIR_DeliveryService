@@ -1,5 +1,10 @@
 <?php
 $cont = 'this'; // Ignore file warnings
+// Deny not authorised requests
+if (!isset($_SESSION['role'])) {
+  $$cont->view->outputStatus(1, 'Not authorised');
+  return;
+}
 // Mode
 try {
   switch ($_SERVER['REQUEST_METHOD']) {
@@ -10,6 +15,8 @@ try {
         require getFileFromRoot('/table/utils/_table_data.php');
         $table_data = array_values(array_slice($table_data, 2));
         /* Data checks */
+        // Check privileges
+        if (!$$cont->checkPrivilege($_SESSION['role'], $privilege['POST'])) return;
         // Check if table headers correct
         if (array_keys($json["data"]) === $table_data) {
           // Encrypt passwords
@@ -33,6 +40,9 @@ try {
       if ($table) {
         $ids = $json["data"]["ids"];
         /* Data checks */
+        // Check privileges
+        if (!$$cont->checkPrivilege($_SESSION['role'], $privilege['DELETE']))
+          return;
         // Check if ids exists
         if (!$$cont->checkIDArray($ids, $table)) {
           return;
@@ -55,6 +65,9 @@ try {
         $val = $json["data"]["val"];
         $ids = $json["data"]["ids"];
         /* Data checks */
+        // Check privileges
+        if (!$$cont->checkPrivilege($_SESSION['role'], $privilege['PATCH']))
+          return;
         // Check if data is correct
         if (in_array($var, $table_data, true) and isset($val) and is_array($ids)) {
           // Check if ids exists in array

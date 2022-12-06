@@ -26,9 +26,16 @@ class apiController extends baseController
         }
         return true;
     }
+
     protected function encryptPass($pass)
     {
         return password_hash($pass, PASSWORD_DEFAULT);
+    }
+
+    protected function checkPrivilege($user_role, $privileges) {
+        if ($user_role == 'admin') return true;
+        if (in_array($user_role, $privileges)) return true;
+        else return false;
     }
 }
 class apiModel extends baseModel
