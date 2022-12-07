@@ -37,8 +37,7 @@ try {
                 session_start();
                 $_SESSION['theme'] = $preserve_theme;
                 $$cont->view->outputStatus(0, "DeAuth successful");
-            }
-            else {
+            } else {
                 $$cont->view->outputStatus(1, "Wrong input");
             }
             return;
@@ -57,8 +56,13 @@ try {
 
         // getOrderStatus
         case 'GET':
-            $result = $$cont->model->getOrderStatus($_GET['order']);
-            $$cont->view->outputStatus(0, $result[0], $result[1]);
+            try {
+                $result = $$cont->model->getOrderStatus($_GET['order']);
+                $$cont->view->outputStatus(0, $result[0], $result[1]);
+            } catch (Exception $e) {
+                $message = $e->getMessage();
+                $$cont->view->outputStatus(2, "Ошибка получения заказа");
+            }
             return;
 
         // Error

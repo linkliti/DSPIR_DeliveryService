@@ -9,7 +9,7 @@
       <p id="StatusMSG" class="lead mb-4">Введите номер заказа для отображения его состояния</p>
       <form id="orderStatusForm">
         <div class="form-floating mb-3 mt-3">
-          <input type="text" name="input_field" required class="form-control rounded-3" id="orderInput" placeholder="Номер заказа">
+          <input name="input_field" onkeypress="return isNumberKey(event)" required class="form-control rounded-3" id="orderInput" placeholder="Номер заказа">
           <label for="orderInput">Номер заказа</label>
         </div>
         <div class="d-grid gap-2 d-sm-flex justify-content-sm-center">
@@ -21,6 +21,13 @@
 </div>
 
 <script type="text/javascript">
+  function isNumberKey(e) {
+      var charCode = (e.which) ? e.which : e.keyCode
+      if (charCode > 31 && (charCode < 48 || charCode > 57))
+        return false;
+      return true;
+    }
+
   window.addEventListener("DOMContentLoaded", function () {
     document.getElementById('orderStatusForm').addEventListener("submit", function (e) {
       e.preventDefault();
