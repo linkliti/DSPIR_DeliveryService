@@ -1,3 +1,6 @@
 <?php
-echo password_hash('mycoolpass', PASSWORD_DEFAULT);
+for ($i = 2; $i <= 9; $i++) {
+    echo password_hash('workPass'. $i, PASSWORD_DEFAULT);
+    echo '<br>';
+}
 ?>

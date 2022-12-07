@@ -37,7 +37,7 @@ switch ($target) {
     $ignore_first = true;
     break;
   case 'workers.php':
-    $privilege = array("VIEW" => array('manager'), "POST" => array('admin'), "DELETE" => array('admin'), "PATCH" => array('admin'));
+    $privilege = array("VIEW" => array('manager'), "POST" => array('manager'), "DELETE" => array('admin'), "PATCH" => array('admin'));
     $table_data = array('id_Worker', 'User_login', 'User_pass', 'Fullname', 'Post', 'Salary', 'WorkerType', 'Shift', 'Vehicles_id_Vehicle');
     $table_headers_modify = array('ID сотрудника', 'Логин', 'Пароль', 'ФИО', 'Должность', 'Зарплата', 'Тип', 'Смена', 'ID транспорта');
     $table_headers_show = array('', 'ID', 'Логин', 'ФИО', 'Должность', 'Зарплата', 'Тип', 'Смена', '>', 'ID, Наим. транспорта');
