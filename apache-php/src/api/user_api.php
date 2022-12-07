@@ -8,7 +8,11 @@ try {
             $login = $json["data"]["login"];
             $pass = $json["data"]["pass"];
             $result = $$cont->model->getAuthData($login);
-            if ($result and $result[4] != 0) { // Check if result and user is not banned
+            if ($result) { // Check if result and user is not banned
+                if ($result[4] == 0) {
+                    $$cont->view->outputStatus(1, "User is not allowed");
+                    return;
+                }
                 if (password_verify($pass, $result[1])) {
                     $_SESSION['fio'] = $result[0];
                     $_SESSION['login'] = $login;

@@ -13,12 +13,16 @@ try {
       $table = strstr($json["table"], '.', true) ?: '';
       if ($table) {
         require getFileFromRoot('/table/utils/_table_data.php');
-        $table_data = array_values(array_slice($table_data, 2));
+        $table_data = array_values(array_slice($table_data, 1));
         /* Data checks */
         // Check privileges
-        if (!$$cont->checkPrivilege($_SESSION['role'], $privilege['POST'])) return;
+        if (!$$cont->checkPrivilege($_SESSION['role'], $privilege['POST']))
+          return;
         // Check if table headers correct
         if (array_keys($json["data"]) === $table_data) {
+          // Transform date
+          if ($table == 'orders' and $json["data"]["DeliveryDate"])
+            $json["data"]["DeliveryDate"] = $$cont->transformDate($json["data"]["DeliveryDate"]);
           // Encrypt passwords
           if ($table == 'workers')
             $json["data"]["User_pass"] = $$cont->encryptPass($json["data"]["User_pass"]);
@@ -38,8 +42,14 @@ try {
     case 'DELETE':
       $table = strstr($json["table"], '.', true) ?: '';
       if ($table) {
+        require getFileFromRoot('/table/utils/_table_data.php');
         $ids = $json["data"]["ids"];
         /* Data checks */
+        // Preserve service rows
+        if ($ignore_first and in_array(1, $ids)) {
+          $$cont->view->outputStatus(1, 'Cannot modify service row with ID 1');
+          return;
+        }
         // Check privileges
         if (!$$cont->checkPrivilege($_SESSION['role'], $privilege['DELETE']))
           return;
@@ -60,23 +70,31 @@ try {
       $table = strstr($json["table"], '.', true) ?: '';
       if ($table) {
         require getFileFromRoot('/table/utils/_table_data.php');
-        $table_data = array_values(array_slice($table_data, 2));
+        $table_data = array_values(array_slice($table_data, 1));
         $var = $json["data"]["var"];
         $val = $json["data"]["val"];
         $ids = $json["data"]["ids"];
         /* Data checks */
+        // Preserve service rows
+        if ($ignore_first and in_array(1, $ids)) {
+          $$cont->view->outputStatus(1, 'Cannot modify service row with ID 1');
+          return;
+        }
         // Check privileges
         if (!$$cont->checkPrivilege($_SESSION['role'], $privilege['PATCH']))
           return;
         // Check if data is correct
         if (in_array($var, $table_data, true) and isset($val) and is_array($ids)) {
           // Check if ids exists in array
-          if (!$$cont->checkIDArray($json["data"]["ids"], $table)) {
+          if (!$$cont->checkIDArray($ids, $table)) {
             return;
           }
           // Encrypt passwords
-          if ($table == 'workers' and $json["data"]["var"] == 'User_pass')
-            $json["data"]["var"] = $$cont->encryptPass($json["data"]["var"]);
+          if ($table == 'workers' and $var == 'User_pass')
+            $val = $$cont->encryptPass($val);
+          // Transform date
+          if ($table == 'orders' and $var == "DeliveryDate")
+            $val = $$cont->transformDate($val);
           // Finally updating table
           $$cont->model->updateTable($table, $var, $val, $ids);
           $$cont->view->outputStatus(0, 'Updated entries in ' . $table);

@@ -32,6 +32,13 @@ class apiController extends baseController
         return password_hash($pass, PASSWORD_DEFAULT);
     }
 
+    protected function transformDate($date)
+    {
+        $dateArray = explode('.', $date);
+        if ($dateArray) return implode('', array_reverse($dateArray));
+        else throw new Exception('Wrong date format');
+    }
+
     protected function checkPrivilege($user_role, $privileges) {
         if ($user_role == 'admin') return true;
         if (in_array($user_role, $privileges)) return true;
@@ -80,6 +87,10 @@ class apiModel extends baseModel
     public function addToTable($table, $data, $headers)
     {
         $table = ucfirst($table);
+        // Wrap variables
+        foreach ($data as $key => $val) {
+            $data[$key] = wrap($data[$key]);
+        }
         $query = "INSERT INTO " . $table
         . " (" . implode(', ', $headers) . ") VALUES (" . implode(', ', $data) . ");";
         $this->mysqli->query($query);
@@ -88,7 +99,7 @@ class apiModel extends baseModel
     public function updateTable($table, $var, $val, $ids) {
         $table = ucfirst($table);
         $id_name = "id_" . substr($table, 0, -1);
-        $query = "UPDATE " . $table . " SET " . $var . " = " . $val
+        $query = "UPDATE " . $table . " SET " . $var . " = " . wrap($val)
         . " WHERE " . $id_name . " IN (" . implode(', ', $ids) . ");";
         $this->mysqli->query($query);
     }

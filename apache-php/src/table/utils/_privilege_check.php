@@ -1,11 +1,6 @@
 <?php
-// is user allowed to VIEW
-if (!checkPrivilege($privilege['VIEW'])) {
-  require_once getFileFromRoot('/table/utils/_access_denied_msg.php');
-  return;
-}
 // Container
-echo '<div class="container-lg pt-4"><form id="frm-example"><p>';
+echo '<div class="container-lg pt-4"><p>';
 if (checkPrivilege($privilege['POST'])) {
   require_once getFileFromRoot('/table/utils/_add_form.php');
   echo '<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addModal">Добавить</button>';

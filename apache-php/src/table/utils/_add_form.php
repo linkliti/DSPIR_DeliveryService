@@ -8,17 +8,10 @@
 
   async function addToTable() {
     var form = document.getElementById('addModalForm')
-    var headers = [
-    <?php
-      foreach ($table_data as $tempVal) {
-        echo '"' . $tempVal . '",';
-      }
-    ?>
-    ];
     var data = {};
     data["data"] = {};
     for (let i = 0; i < form.elements.length-1; i++) {
-      data["data"][headers[i+2]] = form.elements[i].value;
+      data["data"][form.elements[i].name] = form.elements[i].value;
     };
     data["table"] = <?php echo '"' . currentFile() . '";'; ?>
     str_data = JSON.stringify(data);
@@ -42,13 +35,15 @@
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body p-5 pt-0">
-        <form id="addModalForm" class="">
+        <form id="addModalForm">
           <?php
           foreach ($table_data as $i => $data) {
+            if ($i>0) {
               echo '<div class="form-floating mb-3">';
-              echo '<input type="text" required  class="form-control rounded-3" id="floatingInput" placeholder="' . $table_headers_modify[$i] . '">';
+              echo '<input type="text" required name="'. $table_data[$i] .'"  class="form-control rounded-3" id="floatingInput" placeholder="' . $table_headers_modify[$i] . '">';
               echo '<label for="floatingInput">' . $table_headers_modify[$i] . '</label>';
               echo '</div>';
+            }
           }
           ?>
           <p id="StatusMSGAdd"></p>

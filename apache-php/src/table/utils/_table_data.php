@@ -10,7 +10,7 @@ switch ($target) {
     break;
   case 'orders.php':
     $privilege = array("VIEW" => array('manager', 'driver'), "POST" => array('manager'), "DELETE" => array('admin'), "PATCH" => array('manager'));
-    $table_data = array('id_Order', 'Positions_id_Position', 'Clients_id_Client', 'Pvzs_id_Pvz', 'Workers_id_Worker', 'DeliveryAmount', 'DeliveryDateTime', 'DeliveryStatus');
+    $table_data = array('id_Order', 'Positions_id_Position', 'Clients_id_Client', 'Pvzs_id_Pvz', 'Workers_id_Worker', 'DeliveryAmount', 'DeliveryDate', 'DeliveryStatus');
     $table_headers_modify = array('ID доставки', 'ID позиции', 'ID клиента', 'ID ПВЗ', 'ID Сборщика', 'Сумма', 'Дата доставки', 'Статус');
     $table_headers_show = array('', 'ID', '>', 'ID, Наим. позиции', '>', 'ID, ФИО Клиента', '>', 'ID, Имя ПВЗ', '>', 'ID, ФИО Водителя', 'Сумма', 'Дата доставки', '>', 'Статус');
     $ignore_first = false;

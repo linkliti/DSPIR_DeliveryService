@@ -9,7 +9,7 @@
     var selected = getSelectedIDs();
     var form = document.getElementById('updateModalForm');
     var data = {};
-    data["table"] = <?php echo '"' . currentFile() . '";'; ?>;
+    data["table"] = <?php echo '"' .currentFile(). '";'; ?>;
     data["data"] = {};
     data["data"]["var"] = document.getElementById('UpdateVariable').value;
     data["data"]["val"] = document.getElementById('UpdateValue').value;
@@ -44,7 +44,9 @@
               <select id="UpdateVariable" class="form-select">
                 <?php
                 foreach ($table_data as $i => $data) {
+                  if ($i > 0) {
                     echo '<option value="' . $data . '">' . $table_headers_modify[$i] . '</option>';
+                  }
                 }
                 ?>
               </select>
