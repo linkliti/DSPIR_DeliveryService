@@ -30,6 +30,9 @@ function openmysqli(): mysqli {
 function getFileFromRoot($path) {
     return $_SERVER['DOCUMENT_ROOT'] . $path;
 }
+function getFileUnderRoot($path) {
+    return $_SERVER['DOCUMENT_ROOT'] . '/../' . $path;
+}
 
 // Wrap in commas
 function wrap($o) {

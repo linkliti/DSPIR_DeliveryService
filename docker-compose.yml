@@ -13,7 +13,6 @@ services:
       - ./apache-php/php.ini:/usr/local/etc/php/php.ini
     ports:
       - "9003:9003"
-      - "8081:8081"
   nginx:
     container_name: nginx
     build: nginx
