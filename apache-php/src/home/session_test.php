@@ -2,6 +2,12 @@
   <title>Session Debug Page</title>
 </head>
 
+<?php
+if (!checkPrivilege('admin')) {
+    require_once getFileFromRoot('/table/utils/_access_denied_msg.php');
+    return;
+}
+?>
 
 <div class="container mt-4">
   <h1>Session Debug Page</h1>

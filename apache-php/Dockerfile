@@ -10,9 +10,6 @@ COPY --from=composer /usr/bin/composer /usr/local/bin/composer
 RUN apt-get install -y git unzip
 # Alice (fixtures generator)
 RUN composer require nelmio/alice
-# JpGraph
-COPY jpgraph.tar.gz /var/www/jpgraph.tar.gz
-RUN tar -xzf jpgraph.tar.gz
 # Rewrite
 RUN a2enmod rewrite
 # Redis
@@ -21,6 +18,9 @@ RUN docker-php-ext-enable redis
 # Xdebug
 RUN pecl install xdebug
 RUN docker-php-ext-enable xdebug
-# GD
+# GD (Graphics Library)
 RUN apt-get install -y libpng-dev
 RUN docker-php-ext-install gd
+# JpGraph
+COPY jpgraph.zip /var/www/jpgraph.zip
+RUN unzip jpgraph.zip
