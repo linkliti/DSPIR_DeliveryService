@@ -15,13 +15,6 @@ function main()
         header("location: /error.html");
         return;
     };
-    # Server misc in userContent
-    $current_url = trim($_SERVER['REQUEST_URI'], '/');
-    $current_url_array = explode('/', $current_url);
-    if ($current_url_array[0] == 'userContent') {
-        require_once getFileFromRoot('/'. $current_url);
-        return;
-    }
     # Test MySQL server
     try {
         openmysqli();
@@ -31,7 +24,8 @@ function main()
         return;
     }
     # Current URL
-
+    $current_url = trim($_SERVER['REQUEST_URI'], '/');
+    $current_url_array = explode('/', $current_url);
     # Redirect from root directory
     if (count($current_url_array) == 1) {
         header('Location: /home/home.php');

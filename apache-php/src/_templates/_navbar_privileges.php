@@ -5,7 +5,8 @@ function addLinksForNavbar($privilege, $page_url, $page_title, &$links) {
         $links[$page_url] = $page_title;
     }
 }
-
+$links['/pdf/showPDF.php'] = "PDF";
+$links['/home/session_test.php'] = "Дебаг";
 //addLinksForNavbar(array('admin'), "/userContent/test.php", "Тест");
 //addLinksForNavbar(array('admin'), "/home/session_test.php", "Дебаг");
 addLinksForNavbar(array('manager'), "/table/workers.php", "Персонал", $links);

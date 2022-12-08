@@ -1,5 +1,5 @@
 RewriteEngine On
 RewriteBase /
-RewriteRule ^(files) - [L]
+RewriteCond %{REQUEST_URI} !/userContent
 RewriteRule ^(.*)$ index.php [NC,L]
 AddType 'text/html; charset=utf-8' .html .htm .shtml
