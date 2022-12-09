@@ -10,16 +10,44 @@
 
 <style type="text/css">
   .dt-checkboxes {
-    width: 1em;
-    height: 1em;
-    margin-top: .25em;
+    width: 1.5rem;
+    height: 1.5rem;
+    margin-top: 1rem;
+  }
+
+  tfoot {
+    display: table-header-group;
+  }
+
+  tfoot input {
+    min-width: 3rem;
+    height: 1.5rem;
   }
 </style>
 
 <!-- Table JS -->
 <script type="text/javascript">
   $(document).ready(function () {
+    // Setup - add a text input to each footer cell
+    $('#example tfoot th').each(function () {
+      var title = $(this).text();
+      $(this).html('<input class="form-control" type="text" placeholder="" />');
+    });
     table = $('#example').DataTable({
+      initComplete: function () {
+        // Apply the search
+        this.api()
+          .columns()
+          .every(function () {
+            var that = this;
+
+            $('input', this.footer()).on('keyup change clear', function () {
+              if (that.search() !== this.value) {
+                that.search(this.value).draw();
+              }
+            });
+          });
+      },
       'columnDefs': [
         {
           'targets': 0,
@@ -36,12 +64,18 @@
       'select': {
         'style': 'multi'
       },
+      "search": {
+        "regex": true
+      },
       'order': [[1, 'asc']]
     });
 
     // Handle form submission event
     $('#frm-example').on('submit', function (e) {
       e.preventDefault();
+    });
+    $('tfoot').each(function () {
+      $(this).insertAfter($(this).siblings('thead'));
     });
   });
   function getSelectedIDs() {
@@ -78,14 +112,23 @@
             echo "<td>" . $entry[$i] . "</td>"; // Add all data in entry to table
           }
           echo "</tr>";
-        }
-        else $ignore_first = false;
+        } else
+          $ignore_first = false;
       }
     } else {
       echo '';
     }
     ?>
   </tbody>
+  <tfoot class="table">
+    <tr>
+      <?php
+      foreach ($table_headers_show as $header) {
+        echo "<th>" . $header . "</th>";
+      }
+      ?>
+    </tr>
+  </tfoot>
 </table>
 <hr>
 </form>
