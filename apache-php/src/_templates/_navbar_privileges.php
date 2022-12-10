@@ -5,6 +5,11 @@ function addLinksForNavbar($privilege, $page_url, $page_title, &$links) {
         $links[$page_url] = $page_title;
     }
 }
+// Track for not authorised
+if (!checkPrivilege('is_auth')) {
+    $links['/home/track.php'] = "Отслеживание";
+}
+// RSCHIR
 $links['/pdf/showPDF.php'] = "PDF";
 $links['/graph/graphs.php'] = "Графики";
 // Debug
