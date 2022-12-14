@@ -120,14 +120,14 @@ class graphModel extends baseModel
 
   protected function addWatermark($image)
   {
-    $stamp = imagecreatefrompng(getFileFromRoot('/graph/_watermark.png'));
+    $stamp = imagecreatefrompng(getFileFromRoot('/graph/error.png'));
     $imageWidth = imagesx($image);
     $imageHeight = imagesy($image);
     // Подстроить размер под фото
     $stamp = imagescale($stamp, $imageWidth, $imageHeight);
     $stampWidth = imagesx($stamp);
     $stampHeight = imagesy($stamp);
-    imagecopy(
+    imagecopymerge(
       // Исходники
       $image,
       $stamp,
@@ -139,7 +139,8 @@ class graphModel extends baseModel
       0,
       // Длина ширина штампа - отображать полностью
       $stampWidth,
-      $stampHeight
+      $stampHeight,
+      30
     );
     // Захват потока
     ob_start();
